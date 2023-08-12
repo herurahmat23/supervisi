@@ -10,6 +10,7 @@ class Instrumen_penilaian extends CI_Controller
             $this->session->set_flashdata('need_login', 'Anda Harus Login Terlebih Dahulu!');
             redirect('Login');
         }
+        $this->load->model('Instrumen_penilaian_model');
     }
 
     public function index()
@@ -153,12 +154,12 @@ class Instrumen_penilaian extends CI_Controller
         echo json_encode($array);
     }
 
-    public function get_by_id_kategori_instrumen_skp()
-    {
-        $id = $this->input->post('id');
-        $data = $this->db->get_where('kategori_instrumen_skp', ['id' => $id])->row();
-        echo json_encode($data);
-    }
+    // public function get_by_id_kategori_instrumen_skp()
+    // {
+    //     $id = $this->input->post('id');
+    //     $data = $this->db->get_where('kategori_instrumen_skp', ['id' => $id])->row();
+    //     echo json_encode($data);
+    // }
 
     public function update_kategori_instrumen_skp()
     {
@@ -183,6 +184,77 @@ class Instrumen_penilaian extends CI_Controller
     {
         $this->db->where('id', $this->input->post('id'));
         $this->db->delete('kategori_instrumen_skp');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        echo json_encode($array);
+    }
+
+    public function instrumen_skp()
+    {
+        $header['title'] = "Instrumen Sasaran Keselamatan Pasien";
+        $header['menu'] = "mn_instrumen";
+        $data['kategori'] = $this->db->get('kategori_instrumen_skp')->result();
+        $this->load->view('template/Header', $header);
+        $this->load->view('instrumen_penilaian/instrumen_skp/Index', $data);
+        $this->load->view('template/Footer');
+    }
+
+    public function load_instrumen_skp()
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->get_instrumen_skp()->result();
+        $this->load->view('instrumen_penilaian/instrumen_skp/Table', $data);
+    }
+
+    public function save_instrumen_skp()
+    {
+        $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('instrumen', 'instrumen', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no' => $this->input->post('no'),
+                'kategori' => $this->input->post('kategori'),
+                'instrumen' => $this->input->post('instrumen')
+            ];
+            $this->db->insert('instrumen_skp', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    // public function get_by_id_instrumen_skp()
+    // {
+    //     $id = $this->input->post('id');
+    //     $data = $this->db->get_where('instrumen_skp', ['id' => $id])->row();
+    //     echo json_encode($data);
+    // }
+
+    public function update_instrumen_skp()
+    {
+        $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no' => $this->input->post('no'),
+                'kategori' => $this->input->post('kategori'),
+                'instrumen' => $this->input->post('instrumen')
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('instrumen_skp', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function delete_instrumen_skp()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('instrumen_skp');
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
     }
