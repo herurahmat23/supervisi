@@ -55,7 +55,7 @@
             <div class="icon">
                 <i class="far fa-list-alt"></i>
             </div>
-            <a href="<?= site_url('Instrumen_penilaian/kategori_instrumen') ?>" class="small-box-footer">
+            <a href="<?= site_url('Instrumen_penilaian/kategori_instrumen_skp') ?>" class="small-box-footer">
                 Go <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>
@@ -70,7 +70,7 @@
             <div class="icon">
                 <i class="fas fa-hospital-alt"></i>
             </div>
-            <a href="<?= site_url('Master/ruangan') ?>" class="small-box-footer">
+            <a href="<?= site_url('Instrumen_penilaian/instrumen_skp') ?>" class="small-box-footer">
                 Go <i class="fas fa-arrow-circle-right"></i>
             </a>
         </div>

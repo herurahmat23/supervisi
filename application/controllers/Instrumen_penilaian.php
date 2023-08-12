@@ -119,4 +119,71 @@ class Instrumen_penilaian extends CI_Controller
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
     }
+
+    public function kategori_instrumen_skp()
+    {
+        $header['title'] = "Kategori Instrumen Sasaran Keselamatan Pasien";
+        $header['menu'] = "mn_instrumen";
+        $this->load->view('template/Header', $header);
+        $this->load->view('instrumen_penilaian/kategori_instrumen_skp/Index');
+        $this->load->view('template/Footer');
+    }
+
+    public function load_kategori_instrumen_skp()
+    {
+        $data['data'] = $this->db->order_by('no', 'ASC')->get('kategori_instrumen_skp')->result();
+        $this->load->view('instrumen_penilaian/kategori_instrumen_skp/Table', $data);
+    }
+
+    public function save_kategori_instrumen_skp()
+    {
+        $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no' => $this->input->post('no'),
+                'kategori' => $this->input->post('kategori')
+            ];
+            $this->db->insert('kategori_instrumen_skp', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function get_by_id_kategori_instrumen_skp()
+    {
+        $id = $this->input->post('id');
+        $data = $this->db->get_where('kategori_instrumen_skp', ['id' => $id])->row();
+        echo json_encode($data);
+    }
+
+    public function update_kategori_instrumen_skp()
+    {
+        $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no' => $this->input->post('no'),
+                'kategori' => $this->input->post('kategori')
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('kategori_instrumen_skp', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function delete_kategori_instrumen_skp()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('kategori_instrumen_skp');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        echo json_encode($array);
+    }
 }
