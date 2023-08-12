@@ -52,4 +52,42 @@ class Login extends CI_Controller
         $this->session->sess_destroy();
         redirect('Login');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // WS
+    public function loginWS()
+    {
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+        if ($this->form_validation->run() == true) {
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+
+            $cek_un = $this->Login_model->cek_username($username);
+            if ($cek_un->num_rows() > 0) {
+                $hasil = $cek_un->row();
+                if (password_verify($password, $hasil->password)) {
+                    $array = array('status' => 'success', 'message' => 'Login Berhasil.', 'data' => $cek_un->row_array());
+                } else {
+                    $array = array('status' => 'fail', 'message' => 'Login Gagal : Password Anda Salah!.');
+                }
+            } else {
+                $array = array('status' => 'fail', 'message' => 'Login Gagal : NIK Tidak Terdaftar!.');
+            }
+        } else {
+            $array = array('status' => 'fail', 'message' => 'Login gagal: ' . validation_errors());
+        }
+        echo json_encode($array);
+    }
 }
