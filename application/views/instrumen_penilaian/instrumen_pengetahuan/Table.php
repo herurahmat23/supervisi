@@ -13,9 +13,8 @@
                 <td class="text-center"><?= $d->no ?></td>
                 <td><?= $d->soal ?></td>
                 <td class="text-center">
-                    <a onclick="detail('<?= $d->id ?>')" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                     <a onclick="edit_data('<?= $d->id ?>')" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                    <a onclick="delete_data('<?= $d->id ?>','<?= $d->soal ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <a onclick="delete_data('<?= $d->id ?>','<?= $d->no ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
 
