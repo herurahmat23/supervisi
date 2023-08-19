@@ -71,7 +71,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <li class="nav-item">
                             <a href="<?= site_url('Tentang_rs') ?>" class="nav-link <?php if ($menu == "mn_tentang_rs") {
                                                                                         echo "active";
-                                                                                    } ?>"><i class="far fa-hospital"></i> Tentang Rumah Sakit</a>
+                                                                                    } ?>"><i class="far fa-hospital"></i> Tentang RS</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
