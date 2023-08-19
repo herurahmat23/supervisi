@@ -34,8 +34,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="main-header navbar navbar-expand-md navbar-dark navbar-lightblue">
             <div class="container">
                 <a href="<?= site_url('Dashboard') ?>" class="navbar-brand">
-                    <img src="<?= base_url('assets/') ?>dist/img/siatan_logo.png" alt="SI ATAN  Logo" class="brand-image elevation-0  " style="opacity: .8">
-                    <span class="brand-text font-weight">SI ATAN</span>
+                    <img src="<?= base_url('assets/') ?>dist/img/siatan_logo.png" alt="SI ATAN  Logo" class="brand-image elevation-0 ">
+                    <span class="brand-text badge badge-pill badge-light font-weight">SI ATAN</span>
                 </a>
                 <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -63,6 +63,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                                                     echo "active";
                                                                                                 } ?>"><i class="fas fa-notes-medical"></i> Instrumen Penilaian</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="<?= site_url('Kebijakan') ?>" class="nav-link <?php if ($menu == "mn_kebijakan") {
+                                                                                        echo "active";
+                                                                                    } ?>"><i class="fas fa-file-medical"></i> Kebijakan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?= site_url('Tentang_rs') ?>" class="nav-link <?php if ($menu == "mn_tentang_rs") {
+                                                                                        echo "active";
+                                                                                    } ?>"><i class="far fa-hospital"></i> Tentang Rumah Sakit</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <!-- Navbar Search -->
@@ -73,7 +83,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li> -->
                         <li class="nav-item dropdown ">
                             <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="true">
-                                <i class="far fa-user"></i><strong> <?= $this->session->userdata('nama') ?> | <span class="badge badge-light">Role: <?= $this->session->userdata('nama_role') ?></span></strong>
+                                <i class="far fa-user"></i><strong> <?= $this->session->userdata('nama') ?> | <span class="badge badge-dark">Role: <?= $this->session->userdata('nama_role') ?></span></strong>
                             </a>
                             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right " style="left: inherit; right: 0px;">
 
