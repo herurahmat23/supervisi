@@ -7,7 +7,7 @@ class User_model extends CI_Model
 {
     public function getData()
     {
-        return $this->db->select('user.id,user.nik,user.nama,role.role,user.role as id_role')
+        return $this->db->select('*,user.id,user.nik,user.nama,role.role,user.role as id_role')
             ->from('user')
             ->join('role', 'user.role=role.id')
             ->get()

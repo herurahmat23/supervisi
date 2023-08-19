@@ -18,7 +18,21 @@
                 <td><?= $d->nama ?></td>
                 <td><?= $d->role ?></td>
                 <td class="text-center">
-                    <a onclick="edit_data('<?= $d->id ?>','<?= $d->nik ?>','<?= $d->nama ?>','<?= $d->id_role ?>')" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                    <a onclick="edit_data('<?= $d->id ?>',
+                    '<?= $d->nik ?>',
+                    '<?= $d->nama ?>',
+                    '<?= $d->id_role ?>',
+                    '<?= $d->jabatan ?>',
+                    '<?= $d->ruangan ?>',
+                    '<?= $d->jenis_kelamin ?>',
+                    '<?= $d->email ?>',
+                    '<?= $d->pendidikan ?>',
+                    '<?= $d->masa_kerja ?>',
+                    '<?= $d->pelatihan_patient_safety ?>',
+                    '<?= $d->tahun_pelatihan_patient_safety ?>',
+                    '<?= $d->no_sertifikat_patient_safety ?>',
+                    '<?= $d->foto ?>',
+                    )" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                     <a onclick="change_pass('<?= $d->id ?>')" class="btn btn-success btn-sm"><i class="fas fa-key"></i></a>
                     <a onclick="delete_data('<?= $d->id ?>','<?= $d->nama ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
                 </td>
