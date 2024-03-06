@@ -12,4 +12,12 @@ class Instrumen_penilaian_model extends CI_Model
             ->join('kategori_instrumen_skp', 'instrumen_skp.kategori=kategori_instrumen_skp.id')
             ->get();
     }
+
+    function get_instrumen_evaluasi()
+    {
+        return $this->db->select('*')
+            ->from('instrumen_evaluasi')
+            ->order_by('no', 'ASC')
+            ->get();
+    }
 }
