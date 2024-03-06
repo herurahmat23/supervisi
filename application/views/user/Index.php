@@ -84,6 +84,7 @@
                                 <option value="DIV">DIV</option>
                                 <option value="Ners">Ners</option>
                                 <option value="S2">S2</option>
+                                <option value="S2 + Spesialis">S2 + Spesialis</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
@@ -197,6 +198,7 @@
                                 <option value="DIV">DIV</option>
                                 <option value="Ners">Ners</option>
                                 <option value="S2">S2</option>
+                                <option value="S2 + Spesialis">S2 + Spesialis</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
