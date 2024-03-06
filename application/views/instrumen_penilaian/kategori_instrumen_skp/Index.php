@@ -30,7 +30,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">No Kategori</label>
-                        <input type="number" name="no" id="no" class="form-control">
+                        <select name="no" id="no" class="form-control">
+                            <option value="">PILIH</option>
+                            <option value="SKP 1">SKP 1</option>
+                            <option value="SKP 2">SKP 2</option>
+                            <option value="SKP 3">SKP 3</option>
+                            <option value="SKP 4">SKP 4</option>
+                            <option value="SKP 5">SKP 5</option>
+                            <option value="SKP 6">SKP 6</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="">Nama Kategori</label>
@@ -60,7 +68,15 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">No Kategori</label>
-                        <input type="number" name="no" id="e_no" class="form-control">
+                        <select name="no" id="e_no" class="form-control">
+                            <option value="">PILIH</option>
+                            <option value="SKP 1">SKP 1</option>
+                            <option value="SKP 2">SKP 2</option>
+                            <option value="SKP 3">SKP 3</option>
+                            <option value="SKP 4">SKP 4</option>
+                            <option value="SKP 5">SKP 5</option>
+                            <option value="SKP 6">SKP 6</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="">Nama Kategori</label>
