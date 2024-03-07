@@ -44,6 +44,14 @@
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="kategori" class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label for="">Jenis</label>
+                        <select name="jenis" id="jenis" class="form-control">
+                            <option value="">PILIH</option>
+                            <option value="1">Kemenkes</option>
+                            <option value="2">SPO Rumah Sakit</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button onclick="save_data()" type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
@@ -81,6 +89,14 @@
                     <div class="form-group">
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="e_kategori" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Jenis</label>
+                        <select name="jenis" id="e_jenis" class="form-control">
+                            <option value="">PILIH</option>
+                            <option value="1">Kemenkes</option>
+                            <option value="2">SPO Rumah Sakit</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -154,6 +170,7 @@
                     });
                     $('#no').val('');
                     $('#kategori').val('');
+                    $('#jenis').val('');
                     load_data();
                 }
             },
@@ -161,10 +178,11 @@
         });
     }
 
-    function edit_data(id, no, kategori) {
+    function edit_data(id, no, kategori, jenis) {
         $('#e_id').val(id);
         $('#e_no').val(no);
         $('#e_kategori').val(kategori);
+        $('#e_jenis').val(jenis);
         $('#editData').modal('show');
     }
 
@@ -188,6 +206,7 @@
 
                     $('#e_no').val('');
                     $('#e_kategori').val('');
+                    $('#e_jenis').val('');
                     $('#editData').modal('hide');
                     load_data();
                 }

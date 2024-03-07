@@ -6,7 +6,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-6 col-6">
                 <!-- small card -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">
@@ -21,7 +21,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-6 col-6">
                 <!-- small card -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">
@@ -40,72 +40,45 @@
     </div>
 </div>
 
-<div class="card card-outline card-lightblue">
-    <div class="card-header">
-        <h3 class="card-title">
-            Instrumen Penilaian Kepala Ruang
-        </h3>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-lg-4 col-6">
-                <!-- small card -->
-                <div class="small-box bg-lightblue">
-                    <div class="inner">
-                        <h5>Instrumen Pengetahuan tentang Supervisi Klinik 4S</h5>
-                        <br>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-list-ol"></i>
-                    </div>
-                    <a href="<?= site_url('Instrumen_penilaian/instrumen_pengetahuan') ?>" class="small-box-footer">
-                        Go <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-6">
-                <!-- small card -->
-                <div class="small-box bg-lightblue">
-                    <div class="inner">
-                        <h5>Instrumen Sikap dalam Supervisi Klinik 4S</h5>
-                        <br>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-list-ol"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">
-                        Go <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-6">
-                <!-- small card -->
-                <div class="small-box bg-lightblue">
-                    <div class="inner">
-                        <h5>Instrumen Keterampilan dalam Supervisi Klinis 4S</h5>
-                        <br>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-list-ol"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">
-                        Go <i class="fas fa-arrow-circle-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="card card-outline card-lightblue">
     <div class="card-header">
         <h3 class="card-title">
-            Instrumen Penilaian Ketua Tim
+            Instrumen Penilaian Kepala Ruang & Instrumen Penilaian Ketua Tim
         </h3>
     </div>
     <div class="card-body">
         <div class="row">
-
+            <div class="col-lg-6 col-6">
+                <!-- small card -->
+                <div class="small-box bg-lightblue">
+                    <div class="inner">
+                        <h5> Instrumen Penilaian Kepala Ruang</h5>
+                        <br>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-list-alt"></i>
+                    </div>
+                    <a href="<?= site_url('Instrumen_penilaian/Instrumen_karu') ?>" class="small-box-footer">
+                        Go <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 col-6">
+                <!-- small card -->
+                <div class="small-box bg-lightblue">
+                    <div class="inner">
+                        <h5>Instrumen Penilaian Ketua Tim</h5>
+                        <br>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-list-alt"></i>
+                    </div>
+                    <a href="<?= site_url('Instrumen_penilaian/Instrumen_katim') ?>" class="small-box-footer">
+                        Go <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -119,7 +92,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-6 col-6">
                 <!-- small card -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">

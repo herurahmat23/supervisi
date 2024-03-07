@@ -140,13 +140,15 @@ class Instrumen_penilaian extends CI_Controller
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
         $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('jenis', 'Jenis', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
             $data = [
                 'no' => $this->input->post('no'),
-                'kategori' => $this->input->post('kategori')
+                'kategori' => $this->input->post('kategori'),
+                'jenis' => $this->input->post('jenis')
             ];
             $this->db->insert('kategori_instrumen_skp', $data);
             $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
@@ -165,13 +167,15 @@ class Instrumen_penilaian extends CI_Controller
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
         $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('jenis', 'Kategori', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
             $data = [
                 'no' => $this->input->post('no'),
-                'kategori' => $this->input->post('kategori')
+                'kategori' => $this->input->post('kategori'),
+                'jenis' => $this->input->post('jenis')
             ];
             $this->db->where('id', $this->input->post('id'));
             $this->db->update('kategori_instrumen_skp', $data);
@@ -326,5 +330,27 @@ class Instrumen_penilaian extends CI_Controller
         $this->db->delete('instrumen_evaluasi');
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
+    }
+
+    // Instrumen Kepala ruangan ---------------------------------------------------------------------------------------------------
+
+    public function instrumen_karu()
+    {
+        $header['title'] = "Instrumen Penilaian Kepala Ruang";
+        $header['menu'] = "mn_instrumen";
+        $this->load->view('template/Header', $header);
+        $this->load->view('instrumen_penilaian/instrumen_karu/Index');
+        $this->load->view('template/Footer');
+    }
+
+    // Instrumen Kepala Tim  ---------------------------------------------------------------------------------------------------
+
+    public function instrumen_katim()
+    {
+        $header['title'] = "Instrumen Penilaian Ketua Tim";
+        $header['menu'] = "mn_instrumen";
+        $this->load->view('template/Header', $header);
+        $this->load->view('instrumen_penilaian/instrumen_katim/Index');
+        $this->load->view('template/Footer');
     }
 }

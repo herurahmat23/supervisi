@@ -18,7 +18,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="addData" data-backdrop="static">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Tambah Data</h4>
@@ -32,9 +32,24 @@
                         <label for="">Kategori SKP</label>
                         <select name="kategori" id="kategori" class="form-control">
                             <option value="" selected disabled>PILIH</option>
-                            <?php foreach ($kategori as $r) { ?>
-                                <option value="<?= $r->id ?>"><?= $r->kategori ?></option>
-                            <?php } ?>
+                            <?php
+                            $group = '';
+                            foreach ($kategori as $r) {
+                                if ($r->jenis == "1") {
+                                    $jenis = 'Kemenkes';
+                                } else  if ($r->jenis == "2") {
+                                    $jenis = 'SPO Rumah Sakit';
+                                }
+                                if ($r->jenis != $group) {
+                                    if ($group !== null) {
+                                        echo '</optgroup>';
+                                    }
+                                    echo '<optgroup label="' . $jenis  . '">';
+                                    $group = $r->jenis;
+                                }
+                                echo '<option value="' . $r->id . '">' . $r->no . ' - ' . $r->kategori . '</option>';
+                            }
+                            echo '</optgroup>'; ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -71,9 +86,24 @@
                         <label for="">Kategori SKP</label>
                         <select name="kategori" id="e_kategori" class="form-control">
                             <option value="" selected disabled>PILIH</option>
-                            <?php foreach ($kategori as $r) { ?>
-                                <option value="<?= $r->id ?>"><?= $r->kategori ?></option>
-                            <?php } ?>
+                            <?php
+                            $group = '';
+                            foreach ($kategori as $r) {
+                                if ($r->jenis == "1") {
+                                    $jenis = 'Kemenkes';
+                                } else  if ($r->jenis == "2") {
+                                    $jenis = 'SPO Rumah Sakit';
+                                }
+                                if ($r->jenis != $group) {
+                                    if ($group !== null) {
+                                        echo '</optgroup>';
+                                    }
+                                    echo '<optgroup label="' . $jenis  . '">';
+                                    $group = $r->jenis;
+                                }
+                                echo '<option value="' . $r->id . '">' . $r->no . ' - ' . $r->kategori . '</option>';
+                            }
+                            echo '</optgroup>'; ?>
                         </select>
                     </div>
                     <div class="form-group">
