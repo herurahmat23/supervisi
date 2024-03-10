@@ -392,9 +392,67 @@ class Instrumen_penilaian extends CI_Controller
     {
         $header['title'] = "Instrumen Penilaian Kepala Ruang";
         $header['menu'] = "mn_instrumen";
+        $data['aspek'] = $this->db->get('aspek')->result();
         $this->load->view('template/Header', $header);
-        $this->load->view('instrumen_penilaian/instrumen_karu/Index');
+        $this->load->view('instrumen_penilaian/instrumen_karu/Index', $data);
         $this->load->view('template/Footer');
+    }
+
+    public function load_instrumen_karu()
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->get_instrumen_karu()->result();
+        $this->load->view('instrumen_penilaian/instrumen_karu/Table', $data);
+    }
+
+    public function save_instrumen_karu()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('instrumen', 'Instrumen', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'aspek' => $this->input->post('aspek'),
+                'no' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek'),
+                'instrumen' => $this->input->post('instrumen'),
+            ];
+            $this->db->insert('instrumen_karu', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function update_instrumen_karu()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('instrumen', 'Instrumen', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'aspek' => $this->input->post('aspek'),
+                'no' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek'),
+                'instrumen' => $this->input->post('instrumen'),
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('instrumen_karu', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function delete_instrumen_karu()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('instrumen_karu');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        echo json_encode($array);
     }
 
     // Instrumen Kepala Tim  ---------------------------------------------------------------------------------------------------
@@ -403,8 +461,66 @@ class Instrumen_penilaian extends CI_Controller
     {
         $header['title'] = "Instrumen Penilaian Ketua Tim";
         $header['menu'] = "mn_instrumen";
+        $data['aspek'] = $this->db->get('aspek')->result();
         $this->load->view('template/Header', $header);
         $this->load->view('instrumen_penilaian/instrumen_katim/Index');
         $this->load->view('template/Footer');
+    }
+
+    public function load_instrumen_katim()
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->get_instrumen_katim()->result();
+        $this->load->view('instrumen_penilaian/instrumen_katim/Table', $data);
+    }
+
+    public function save_instrumen_katim()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('instrumen', 'Instrumen', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'aspek' => $this->input->post('aspek'),
+                'no' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek'),
+                'instrumen' => $this->input->post('instrumen'),
+            ];
+            $this->db->insert('instrumen_katim', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function update_instrumen_katim()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('instrumen', 'Instrumen', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'aspek' => $this->input->post('aspek'),
+                'no' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek'),
+                'instrumen' => $this->input->post('instrumen'),
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('instrumen_katim', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function delete_instrumen_katim()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('instrumen_katim');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        echo json_encode($array);
     }
 }
