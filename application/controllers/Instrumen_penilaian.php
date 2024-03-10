@@ -298,13 +298,6 @@ class Instrumen_penilaian extends CI_Controller
         echo json_encode($array);
     }
 
-    // public function get_by_id_instrumen_evaluasi()
-    // {
-    //     $id = $this->input->post('id');
-    //     $data = $this->db->get_where('instrumen_evaluasi', ['id' => $id])->row();
-    //     echo json_encode($data);
-    // }
-
     public function update_instrumen_evaluasi()
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
@@ -332,6 +325,67 @@ class Instrumen_penilaian extends CI_Controller
         echo json_encode($array);
     }
 
+    // Aspek Instrumen---------------------------------------------------------------------------------------------------
+
+    public function aspek_instrumen()
+    {
+        $header['title'] = "Aspek Instrumen";
+        $header['menu'] = "mn_instrumen";
+        $this->load->view('template/Header', $header);
+        $this->load->view('instrumen_penilaian/aspek_instrumen/Index');
+        $this->load->view('template/Footer');
+    }
+
+    public function load_aspek_instrumen()
+    {
+        $data['data'] = $this->db->get('aspek')->result();
+        $this->load->view('instrumen_penilaian/aspek_instrumen/Table', $data);
+    }
+
+    public function save_aspek_instrumen()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no_urut' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek')
+            ];
+            $this->db->insert('aspek', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function update_aspek_instrumen()
+    {
+        $this->form_validation->set_rules('no', 'No Aspek', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('aspek', 'Aspek', 'trim|required|xss_clean');
+
+        if ($this->form_validation->run() == false) {
+            $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
+        } else {
+            $data = [
+                'no_urut' => $this->input->post('no'),
+                'aspek' => $this->input->post('aspek')
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('aspek', $data);
+            $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
+        }
+        echo json_encode($array);
+    }
+
+    public function delete_aspek_instrumen()
+    {
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('aspek');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        echo json_encode($array);
+    }
     // Instrumen Kepala ruangan ---------------------------------------------------------------------------------------------------
 
     public function instrumen_karu()

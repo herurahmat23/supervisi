@@ -49,7 +49,22 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-4 col-6">
+                <!-- small card -->
+                <div class="small-box bg-lightblue">
+                    <div class="inner">
+                        <h5> Aspek Instrumen</h5>
+                        <br>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-list-alt"></i>
+                    </div>
+                    <a href="<?= site_url('Instrumen_penilaian/aspek_instrumen') ?>" class="small-box-footer">
+                        Go <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6">
                 <!-- small card -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">
@@ -64,7 +79,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-6 col-6">
+            <div class="col-lg-4 col-6">
                 <!-- small card -->
                 <div class="small-box bg-lightblue">
                     <div class="inner">
