@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '103.247.8.177',
-	'username' => 'pais1325_admin_supervisi',
-	'password' => 'admin_supervisi',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'pais1325_supervisi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
