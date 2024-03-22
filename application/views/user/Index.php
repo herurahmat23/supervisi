@@ -89,12 +89,13 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Masa Kerja</label>
-                            <select name="masa_kerja" id="masa_kerja" class="form-control">
+                            <!-- <select name="masa_kerja" id="masa_kerja" class="form-control">
                                 <option value="" selected disabled>PILIH</option>
                                 <option value="1-5 tahun">1-5 tahun</option>
                                 <option value="6-10 tahun">6-10 tahun</option>
                                 <option value="> 11 tahun">> 11 tahun</option>
-                            </select>
+                            </select> -->
+                            <input type="text" class="form-control" name="masa_kerja" id="masa_kerja">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Pelatihan Pasien Safety</label>
@@ -203,12 +204,13 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Masa Kerja</label>
-                            <select name="masa_kerja" id="e_masa_kerja" class="form-control">
+                            <!-- <select name="masa_kerja" id="e_masa_kerja" class="form-control">
                                 <option value="" selected disabled>PILIH</option>
                                 <option value="1-5 tahun">1-5 tahun</option>
                                 <option value="6-10 tahun">6-10 tahun</option>
                                 <option value="> 11 tahun">> 11 tahun</option>
-                            </select>
+                            </select> -->
+                            <input type="text" class="form-control" name="e_masa_kerja" id="e_masa_kerja">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Pelatihan Pasien Safety</label>
