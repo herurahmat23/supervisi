@@ -47,8 +47,8 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-lightblue">
             <div class="card-header text-center">
-                <img src="<?= base_url('assets/') ?>dist/img/siatan_logo.png" alt="SI ATAN  Logo" class="brand-image elevation-0  " style="opacity: .8" width="100">
                 <a class="h1"><b>SI ATAN</b></a>
+                <img src="<?= base_url('assets/') ?>dist/img/siatan_logo.png" alt="SI ATAN  Logo" class="brand-image elevation-0  " style="opacity: .8" width="100">
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
