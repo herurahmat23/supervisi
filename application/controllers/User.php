@@ -125,8 +125,8 @@ class User extends CI_Controller
         } else {
             // $upload_image = $_FILES['foto'];
             $config['upload_path']          = './uploads/foto_profil';
-            $config['allowed_types']        = 'jpeg|jpg';
-            $config['max_size']             = 1000;
+            $config['allowed_types']        = 'jpeg|jpg|JPG|JPEG';
+            $config['max_size']             = 2000;
             $config['overwrite']            = true;
             $config['file_name']            = $this->input->post('nik');
             $this->upload->initialize($config);
@@ -200,12 +200,17 @@ class User extends CI_Controller
 
     public function delete()
     {
-        $this->db->select('foto');
         $query = $this->db->get_where('user', array('id' => $this->input->post('id')))->row();
-        unlink(FCPATH . 'uploads/foto_profil/' . $query->foto);
-        $this->db->where('id', $this->input->post('id'));
-        $this->db->delete('user');
-        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        if ($query->foto) {
+            unlink(FCPATH . 'uploads/foto_profil/' . $query->foto);
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->delete('user');
+            $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        } else {
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->delete('user');
+            $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
+        }
         echo json_encode($array);
     }
 }
