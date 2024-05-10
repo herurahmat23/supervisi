@@ -210,7 +210,7 @@
                                 <option value="6-10 tahun">6-10 tahun</option>
                                 <option value="> 11 tahun">> 11 tahun</option>
                             </select> -->
-                            <input type="text" class="form-control" name="e_masa_kerja" id="e_masa_kerja">
+                            <input type="text" class="form-control" name="masa_kerja" id="e_masa_kerja">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="">Pelatihan Pasien Safety</label>
