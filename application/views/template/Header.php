@@ -58,11 +58,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                                     echo "active";
                                                                                 } ?>"><i class="fas fa-hospital-user"></i> User</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('Instrumen_penilaian') ?>" class="nav-link <?php if ($menu == "mn_instrumen") {
-                                                                                                    echo "active";
-                                                                                                } ?>"><i class="fas fa-notes-medical"></i> Instrumen Penilaian</a>
+
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                <i class="fas fa-notes-medical"></i> Instrumen
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="<?= site_url('Instrumen_penilaian') ?>" class="dropdown-item">Instrumen Penilaian</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item">Hasil Penilaian</a>
+                                <a href="<?= site_url('Instrumen_penilaian/hasil_karu') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ka. Ruangan</a>
+                                <a href="<?= site_url('Instrumen_penilaian/hasil_katim') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ka. Tim</a>
+                                <a href="<?= site_url('Instrumen_penilaian/hasil_staff') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Staff</a>
+                                <a href="<?= site_url('Instrumen_penilaian/hasil_evaluasi') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluasi</a>
+                            </div>
                         </li>
+
+
                         <li class="nav-item">
                             <a href="<?= site_url('Kebijakan') ?>" class="nav-link <?php if ($menu == "mn_kebijakan") {
                                                                                         echo "active";

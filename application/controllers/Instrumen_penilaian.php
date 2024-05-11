@@ -132,7 +132,7 @@ class Instrumen_penilaian extends CI_Controller
 
     public function load_kategori_instrumen_skp()
     {
-        $data['data'] = $this->db->order_by('no', 'ASC')->get('kategori_instrumen_skp')->result();
+        $data['data'] = $this->db->order_by('id', 'ASC')->get('kategori_instrumen_skp')->result();
         $this->load->view('instrumen_penilaian/kategori_instrumen_skp/Table', $data);
     }
 
@@ -167,7 +167,7 @@ class Instrumen_penilaian extends CI_Controller
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
         $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('jenis', 'Kategori', 'trim|required|xss_clean');
+        // $this->form_validation->set_rules('jenis', 'Kategori', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
@@ -238,7 +238,7 @@ class Instrumen_penilaian extends CI_Controller
     public function update_instrumen_skp()
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
+        // $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
@@ -522,5 +522,124 @@ class Instrumen_penilaian extends CI_Controller
         $this->db->delete('instrumen_katim');
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // HASIL PENILAIAN----------------------------------------------------------------
+    function hasil_karu()
+    {
+        $header['title'] = "Hasil Penilaian Ka. Ruangan";
+        $header['menu'] = "mn_instrumen";
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_karu();
+
+        $this->load->view('template/Header', $header);
+        $this->load->view('hasil_penilaian/view', $data);
+        $this->load->view('template/Footer');
+    }
+
+
+    function hasil_karu_cetak($id)
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_karu_cetak($id);
+        $data['judul1'] = "INSTRUMEN SUPERVISI KEPADA KEPALA RUANG";
+        $data['judul2'] = "RAWAT INAP RSJKO EHD PROVINSI KEPULAUAN RIAU";
+        $this->load->view('hasil_penilaian/cetak', $data);
+    }
+
+
+
+    function hasil_katim()
+    {
+        $header['title'] = "Hasil Penilaian Ka. TIM";
+        $header['menu'] = "mn_instrumen";
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_katim();
+
+        $this->load->view('template/Header', $header);
+        $this->load->view('hasil_penilaian/view', $data);
+        $this->load->view('template/Footer');
+    }
+
+
+    function hasil_katim_cetak($id)
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_katim_cetak($id);
+        $data['judul1'] = "INSTRUMEN SUPERVISI KEPADA KETUA TIM";
+        $data['judul2'] = "RAWAT INAP RSJKO EHD PROVINSI KEPULAUAN RIAU";
+        $this->load->view('hasil_penilaian/cetak', $data);
+    }
+
+
+
+    function hasil_staff()
+    {
+        $header['title'] = "Hasil Penilaian Perawat";
+        $header['menu'] = "mn_instrumen";
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff();
+
+        $this->load->view('template/Header', $header);
+        $this->load->view('hasil_penilaian/view', $data);
+        $this->load->view('template/Footer');
+    }
+
+
+    function hasil_staff_cetak($kategori, $jadwal_id)
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff_cetak($kategori, $jadwal_id);
+        $data['judul1'] = "INSTRUMEN SUPERVISI " . $data['data'][0]->kategori_instrumen;
+        $data['judul2'] = "RAWAT INAP RSJKO EHD PROVINSI KEPULAUAN RIAU";
+        $this->load->view('hasil_penilaian/cetak', $data);
+    }
+
+
+
+
+    function hasil_evaluasi()
+    {
+        $header['title'] = "Hasil Evaluasi Aktifitas Supervisi";
+        $header['menu'] = "mn_instrumen";
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_evaluasi();
+
+        $this->load->view('template/Header', $header);
+        $this->load->view('hasil_penilaian/view_evaluasi', $data);
+        $this->load->view('template/Footer');
+    }
+
+
+
+    function evaluasi_cetak($id)
+    {
+        $data['data'] = $this->Instrumen_penilaian_model->evaluasi_cetak($id);
+        $data['judul1'] = "INSTRUMEN EVALUASI AKTIVITAS SUPERVISI";
+        $this->load->view('hasil_penilaian/evaluasi_cetak', $data);
     }
 }

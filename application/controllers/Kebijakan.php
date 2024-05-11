@@ -35,11 +35,11 @@ class Kebijakan extends CI_Controller
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
-            $config['upload_path']          = './uploads/kebijakan';
+            $config['upload_path']          = './regulasi';
             $config['allowed_types']        = 'pdf';
             $config['max_size']             = 5000;
             $config['overwrite']            = true;
-            $config['encrypt_name']         = true;
+            $config['file_name']        = $this->input->post('nama');
             $this->upload->initialize($config);
 
             if (!empty($_FILES['file']['name'])) {
@@ -65,7 +65,7 @@ class Kebijakan extends CI_Controller
     {
         $this->db->select('file');
         $query = $this->db->get_where('kebijakan', array('id' => $this->input->post('id')))->row();
-        unlink(FCPATH . 'uploads/kebijakan/' . $query->file);
+        unlink(FCPATH . 'regulasi/' . $query->file);
         $this->db->where('id', $this->input->post('id'));
         $this->db->delete('kebijakan');
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');

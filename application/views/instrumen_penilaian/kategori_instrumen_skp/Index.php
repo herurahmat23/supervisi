@@ -38,20 +38,36 @@
                             <option value="SKP 4">SKP 4</option>
                             <option value="SKP 5">SKP 5</option>
                             <option value="SKP 6">SKP 6</option>
+
+                            <option value="SKP 7">SKP 7</option>
+                            <option value="SKP 8">SKP 8</option>
+                            <option value="SKP 9">SKP 9</option>
+                            <option value="SKP 10">SKP 10</option>
+                            <option value="SKP 11">SKP 11</option>
+                            <option value="SKP 12">SKP 12</option>
+                            <option value="SKP 13">SKP 13</option>
+                            <option value="SKP 14">SKP 14</option>
+                            <option value="SKP 15">SKP 15</option>
+                            <option value="SKP 16">SKP 16</option>
+                            <option value="SKP 17">SKP 17</option>
+                            <option value="SKP 18">SKP 18</option>
+                            <option value="SKP 19">SKP 19</option>
+                            <option value="SKP 20">SKP 20</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="kategori" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <input type="hidden" name="jenis" id="jenis" value="2">
+                    <!-- <div class="form-group">
                         <label for="">Jenis</label>
                         <select name="jenis" id="jenis" class="form-control">
                             <option value="">PILIH</option>
                             <option value="1">Kemenkes</option>
                             <option value="2">SPO Rumah Sakit</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button onclick="save_data()" type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
@@ -90,14 +106,15 @@
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="e_kategori" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <input type="hidden" name="jenis" id="e_jenis" value="2">
+                    <!-- <div class="form-group">
                         <label for="">Jenis</label>
                         <select name="jenis" id="e_jenis" class="form-control">
                             <option value="">PILIH</option>
                             <option value="1">Kemenkes</option>
                             <option value="2">SPO Rumah Sakit</option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button onclick="update_data()" type="button" class="btn btn-primary">Save <i class="fas fa-save"></i></button>

@@ -65,7 +65,7 @@ class User extends CI_Controller
                         'nik' => $this->input->post('nik'),
                         'nama' => $this->input->post('nama'),
                         'role' => $this->input->post('role'),
-                        'password' => password_hash("siatan123", PASSWORD_DEFAULT),
+                        'password' => password_hash("123", PASSWORD_DEFAULT),
                         'jabatan' => $this->input->post('jabatan'),
                         'ruangan' => $this->input->post('ruangan'),
                         'jenis_kelamin' => $this->input->post('jenis_kelamin'),
@@ -87,7 +87,7 @@ class User extends CI_Controller
                     'nik' => $this->input->post('nik'),
                     'nama' => $this->input->post('nama'),
                     'role' => $this->input->post('role'),
-                    'password' => password_hash("siatan123", PASSWORD_DEFAULT),
+                    'password' => password_hash("123", PASSWORD_DEFAULT),
                     'jabatan' => $this->input->post('jabatan'),
                     'ruangan' => $this->input->post('ruangan'),
                     'jenis_kelamin' => $this->input->post('jenis_kelamin'),
@@ -125,8 +125,8 @@ class User extends CI_Controller
         } else {
             // $upload_image = $_FILES['foto'];
             $config['upload_path']          = './uploads/foto_profil';
-            $config['allowed_types']        = 'jpeg|jpg|JPG|JPEG';
-            $config['max_size']             = 2000;
+            $config['allowed_types']        = 'jpeg|jpg';
+            $config['max_size']             = 1000;
             $config['overwrite']            = true;
             $config['file_name']            = $this->input->post('nik');
             $this->upload->initialize($config);
@@ -200,17 +200,12 @@ class User extends CI_Controller
 
     public function delete()
     {
+        $this->db->select('foto');
         $query = $this->db->get_where('user', array('id' => $this->input->post('id')))->row();
-        if ($query->foto) {
-            unlink(FCPATH . 'uploads/foto_profil/' . $query->foto);
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->delete('user');
-            $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
-        } else {
-            $this->db->where('id', $this->input->post('id'));
-            $this->db->delete('user');
-            $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
-        }
+        unlink(FCPATH . 'uploads/foto_profil/' . $query->foto);
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->delete('user');
+        $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
     }
 }
