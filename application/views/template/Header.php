@@ -79,6 +79,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
                         <li class="nav-item">
+                            <a href="<?= site_url('Grafik') ?>" class="nav-link <?php if ($menu == "mn_grafik") {
+                                                                                    echo "active";
+                                                                                } ?>"><i class="fas fa-chart-bar"></i> Grafik</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="<?= site_url('Kebijakan') ?>" class="nav-link <?php if ($menu == "mn_kebijakan") {
                                                                                         echo "active";
                                                                                     } ?>"><i class="fas fa-file-medical"></i> Kebijakan</a>

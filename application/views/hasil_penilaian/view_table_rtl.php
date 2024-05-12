@@ -48,7 +48,7 @@
 
                     // Jika nilai RTL tidak ditemukan, tampilkan -
                     if (!$rtl_ditemukan) {
-                        echo '<td>-</td>';
+                        echo '<td class="text-center">-</td>';
                     }
 
                     // Reset variabel bantuan

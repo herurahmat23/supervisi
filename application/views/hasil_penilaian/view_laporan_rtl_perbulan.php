@@ -70,6 +70,10 @@
             },
             dataType: "HTML",
             success: function(data) {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success'
+                });
                 $('.list-data').html(data)
             },
             complete: function() {}
