@@ -642,4 +642,25 @@ class Instrumen_penilaian extends CI_Controller
         $data['judul1'] = "INSTRUMEN EVALUASI AKTIVITAS SUPERVISI";
         $this->load->view('hasil_penilaian/evaluasi_cetak', $data);
     }
+
+    function laporan_rtl_bulanan()
+    {
+        $header['title'] = "Laporan RTL Bulanan";
+        $header['menu'] = "mn_instrumen";
+        $data['ruangan'] = $this->db->get('ruangan')->result();
+        $this->load->view('template/Header', $header);
+        $this->load->view('hasil_penilaian/view_laporan_rtl_perbulan', $data);
+        $this->load->view('template/Footer');
+    }
+
+    public function get_laporan_rtl_bulanan()
+    {
+        $data['skp'] = $this->db->order_by('id', 'ASC')->get('kategori_instrumen_skp')->result();
+        $ruangan = $this->input->post('ruangan');
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+        $data['data_rtl'] = $this->Instrumen_penilaian_model->laporan_rtl($ruangan, $bulan, $tahun);
+        $data['data_user'] = $this->db->get_where('user', ['ruangan' => $ruangan])->result();
+        $this->load->view('hasil_penilaian/view_table_rtl', $data);
+    }
 }
