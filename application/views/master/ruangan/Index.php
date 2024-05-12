@@ -5,7 +5,9 @@
         <div class="col-auto ms-auto d-print-none">
             <div class="card-action">
                 <a href="<?= site_url('Master') ?>" class="btn btn-danger btn-flat"><i class="fas fa-caret-left"></i> Kembali</a>
-                <button data-toggle="modal" data-target="#addData" type="button" class="btn btn-primary btn-flat"><i class="fas fa-plus-circle"></i> Tambah Data</button>
+                <?php if ($this->session->userdata('id_role') == 1) { ?>
+                    <button data-toggle="modal" data-target="#addData" type="button" class="btn btn-primary btn-flat"><i class="fas fa-plus-circle"></i> Tambah Data</button>
+                <?php } ?>
             </div>
         </div>
     </div>

@@ -7,9 +7,11 @@
 
     </div>
 
-    <div class="card-footer">
-        <button data-toggle="modal" data-target="#addData" class="btn btn-primary btn-block"><i class="fas fa-sync-alt"></i> Edit Tentang RS </button>
-    </div>
+    <?php if ($this->session->userdata('id_role') == 1) { ?>
+        <div class="card-footer">
+            <button data-toggle="modal" data-target="#addData" class="btn btn-primary btn-block"><i class="fas fa-sync-alt"></i> Edit Tentang RS </button>
+        </div>
+    <?php } ?>
 </div>
 
 <div class="modal fade" id="addData" data-backdrop="static">

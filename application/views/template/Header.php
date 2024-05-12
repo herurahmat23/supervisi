@@ -53,11 +53,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                                                     echo "active";
                                                                                 } ?>"><i class="fas fa-th"></i> Master</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="<?= site_url('User') ?>" class="nav-link <?php if ($menu == "mn_user") {
-                                                                                    echo "active";
-                                                                                } ?>"><i class="fas fa-hospital-user"></i> User</a>
-                        </li>
+                        <?php if ($this->session->userdata('id_role') == 1) { ?>
+                            <li class="nav-item">
+                                <a href="<?= site_url('User') ?>" class="nav-link <?php if ($menu == "mn_user") {
+                                                                                        echo "active";
+                                                                                    } ?>"><i class="fas fa-hospital-user"></i> User</a>
+                            </li>
+                        <?php } ?>
 
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -71,6 +73,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <a href="<?= site_url('Instrumen_penilaian/hasil_katim') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ka. Tim</a>
                                 <a href="<?= site_url('Instrumen_penilaian/hasil_staff') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Staff</a>
                                 <a href="<?= site_url('Instrumen_penilaian/hasil_evaluasi') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evaluasi</a>
+                                <a href="<?= site_url('Instrumen_penilaian/laporan_rtl_bulanan') ?>" class="dropdown-item submenu-toggle" data-target="submenuHasilPenilaian">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Laporan RTL Bulanan</a>
                             </div>
                         </li>
 

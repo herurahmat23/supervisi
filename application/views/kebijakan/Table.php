@@ -15,7 +15,9 @@
                 <td><?= $d->nama ?></td>
                 <td class="text-center">
                     <a href="<?= base_url('regulasi/') . $d->file ?>" target="_blank" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                    <a onclick="delete_data('<?= $d->id ?>','<?= $d->nama ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <?php if ($this->session->userdata('id_role') == 1) { ?>
+                        <a onclick="delete_data('<?= $d->id ?>','<?= $d->nama ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>
+                    <?php } ?>
                 </td>
             </tr>
 
