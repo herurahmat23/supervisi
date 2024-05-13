@@ -337,7 +337,7 @@
 
                 var ctx_imprs = document.getElementById('chart_rata_skp_tahunan').getContext('2d')
                 var chart_rata_individu = new Chart(ctx_imprs, {
-                    type: 'bar',
+                    type: 'line',
                     data: {
                         labels: nama,
                         datasets: [{
