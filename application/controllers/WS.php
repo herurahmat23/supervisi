@@ -7,6 +7,8 @@ class WS extends CI_Controller
     {
         parent::__construct();
         $this->load->model('WS_model');
+        $this->load->model('Instrumen_penilaian_model');
+        $this->load->model('Grafik_model');
     }
 
 
@@ -32,6 +34,30 @@ class WS extends CI_Controller
         echo $bulan;
     }
 
+
+    function getRuanganSpinner()
+    {
+        $index = 1;
+        $data_ = array();
+
+
+        $data = array("id" => "0", "ruangan" => "Pilih Ruangan");
+        $data_[0] = $data;
+
+        $dat = $this->db->get('ruangan')->result();
+
+
+        foreach ($dat as $dat) {
+            $temp = array("id" => $dat->id, "ruangan" => $dat->ruangan);
+            $data_[$index] = $temp;
+            $index++;
+        }
+        $bulan = '{values: ' . json_encode($data_) . '}';
+        echo $bulan;
+    }
+
+
+
     public function tentang_rs()
     {
         $data = $this->db->get_where('tentang_rs', ['id' => 1]);
@@ -48,7 +74,7 @@ class WS extends CI_Controller
 
 
 
-     public function regulasi()
+    public function regulasi()
     {
         $nama_file = "";
         $directory = "regulasi/";
@@ -63,9 +89,9 @@ class WS extends CI_Controller
 
         echo '{ "status": true, "data":' . json_encode($data) . '}';
     }
-    
 
-   
+
+
 
     public function loginWS()
     {
@@ -204,9 +230,11 @@ class WS extends CI_Controller
         $bulan_id = $this->input->post('bulan');
         $tahun = $this->input->post('tahun');
         $ruangan = $this->input->post('ruangan');
+        $username = $this->input->post('username');
 
-        $des = $this->WS_model->getJadwal($id_role, $bulan_id, $tahun, $ruangan);
-        echo '{ "status": true, "data":' . json_encode($des) . '}';
+
+        $des = $this->WS_model->getJadwal($id_role, $bulan_id, $tahun, $ruangan, $username);
+        echo '{ "status": true,  "data":' . json_encode($des) . '}';
     }
 
     function deleteJadwal()
@@ -389,5 +417,141 @@ class WS extends CI_Controller
 
         $des = $this->WS_model->getHasilEvaluasi($evaluasi_id);
         echo $des;
+    }
+
+
+
+    function loadInstrumen()
+    {
+        $mninstrumen = $this->input->post('mninstrumen');
+
+        if ($mninstrumen == '1') {
+            $data = $this->Instrumen_penilaian_model->get_instrumen_skp()->result();
+        } elseif ($mninstrumen == '2') {
+            $data = $this->Instrumen_penilaian_model->get_instrumen_katim()->result();
+        } elseif ($mninstrumen == '3') {
+            $data = $this->Instrumen_penilaian_model->get_instrumen_karu()->result();
+        } elseif ($mninstrumen == '4') {
+            $data = $this->Instrumen_penilaian_model->get_instrumen_evaluasi()->result();
+        }
+
+        $return =  '{"status": true,"instrumen":' . json_encode($data) . '}';
+        echo $return;
+    }
+
+
+
+    function get_grafik_rata_individu()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $ruangan = $this->input->post('ruangan');
+
+        $user_peruangan = $this->db->get_where('user', ['ruangan' => $ruangan])->result();
+
+        $grafik = array();
+
+        $i = 0;
+        foreach ($user_peruangan as $u) {
+            $get = $this->Grafik_model->get_rata2_individu($tahun, $bulan, $ruangan, $u->id);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[$i] = array(
+                'rata2' => round($rata, 2),
+                'nama' => $u->nama
+            );
+            $i++;
+        }
+
+
+        $data = '{data: ' . json_encode($grafik) . '}';
+
+        echo $data;
+    }
+
+
+    public function get_grafik_rata_skp()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $ruangan = $this->input->post('ruangan');
+
+
+        $skp = $this->db->order_by('id', 'ASC')->get('kategori_instrumen_skp')->result();
+
+        $grafik = array();
+        $i = 0;
+        foreach ($skp as $u) {
+            $get = $this->Grafik_model->get_rata2_skp($tahun, $bulan, $ruangan, $u->id);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[$i] = array(
+                'rata2' => round($rata, 2),
+                'nama' => $u->no
+            );
+            $i++;
+        }
+
+        $data = '{data: ' . json_encode($grafik) . '}';
+
+        echo $data;
+    }
+
+
+    public function get_grafik_rata_skp_tahunan()
+    {
+        $tahun = $this->input->post('tahun');
+        $ruangan = $this->input->post('ruangan');
+        $arrayBulanAngka = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+
+        $arrayBulanNama = [];
+        $grafik = array();
+        $i = 0;
+
+        foreach ($arrayBulanAngka as $bulan) {
+            $namaBulan = date('F', mktime(0, 0, 0, $bulan, 1));
+            $arrayBulanNama[] = $namaBulan;
+            $get = $this->Grafik_model->get_rata2_skp_tahunan($tahun, $bulan, $ruangan);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[$i] = array(
+                'rata2' => round($rata, 2),
+                'nama' => $namaBulan
+            );
+            $i++;
+        }
+        $data = '{data: ' . json_encode($grafik) . '}';
+
+        echo $data;
     }
 }

@@ -90,7 +90,7 @@ class WS_model extends CI_Model
     }
 
 
-    function getJadwal($id_role, $bulan_id, $tahun, $ruangan)
+    function getJadwal($id_role, $bulan_id, $tahun, $ruangan, $username)
     {
         $tanggal = 01;
         $tanggal = cal_days_in_month(CAL_GREGORIAN, $bulan_id, $tahun);
@@ -111,15 +111,19 @@ class WS_model extends CI_Model
 
         if ($id_role == '3') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='3' AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            WHERE (user.jabatan='3' OR user.jabatan='4' OR user.jabatan='5' OR user.nik='$username') AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } elseif ($id_role == '4') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='4' AND  user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN  '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            WHERE (user.jabatan='4' OR user.jabatan='5' OR user.nik='$username') AND  user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN  '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } elseif ($id_role == '5') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='5' AND user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN  '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            WHERE (user.jabatan='5' OR user.nik='$username')  AND user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN  '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            ");
+        } elseif ($id_role == '6') {
+            $query = $this->db->query("$select $from
+            WHERE user.jabatan='5' AND user.nik='$username' AND user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN  '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } else {
             $query = $this->db->query("$select $from
@@ -207,10 +211,18 @@ class WS_model extends CI_Model
         JOIN instrumen_skp ON form_supervisi.sp_instrumen_id=instrumen_skp.id
         JOIN kategori_instrumen_skp ON instrumen_skp.kategori=kategori_instrumen_skp.id';
 
-        $query = $this->db->query("$select $from
+        if ($id_role != '4' && $id_role != '5') {
+            $query = $this->db->query("$select $from
+            WHERE user.jabatan='5'  AND jadwal.jadwal_status ='0'
+            GROUP BY kategori_instrumen_skp.id
+            ");
+        } else {
+            $query = $this->db->query("$select $from
             WHERE user.jabatan='5' AND user.ruangan='$ruangan'  AND jadwal.jadwal_status ='0'
             GROUP BY kategori_instrumen_skp.id
             ");
+        }
+
 
         return $query->result();
     }
@@ -650,5 +662,15 @@ class WS_model extends CI_Model
 
         $return =  '{"status": true, "data":' . json_encode($cek) . ',"instrumen":' . json_encode($query) . ',"nilai":' . json_encode($query_nilai) . '}';
         return $return;
+    }
+
+
+
+
+
+
+
+    function loadInstrumen($mninstrumen)
+    {
     }
 }
