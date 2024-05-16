@@ -23,6 +23,23 @@ class Grafik extends CI_Controller
         $this->load->view('template/Footer');
     }
 
+    public function get_user_by_ruangan()
+    {
+        $ruangan = $this->input->post('ruangan_id');
+        $users = $this->Grafik_model->getUserByRuangan($ruangan);
+        $userOptions = '';
+
+        if ($users) {
+            foreach ($users as $user) {
+                $userOptions .= '<option value="' . $user['id'] . '">' . $user['nama'] . '</option>';
+            }
+        } else {
+            $userOptions .= '<option value="">Tidak ada PP diruangan ini.</option>';
+        }
+
+        echo $userOptions;
+    }
+
     public function get_grafik_rata_individu()
     {
         $tahun = $this->input->post('tahun');
@@ -119,6 +136,26 @@ class Grafik extends CI_Controller
                 'nama' => $namaBulan
             ];
         }
+        echo json_encode($grafik);
+    }
+
+    public function get_grafik_rata_per_user()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $user = $this->input->post('user');
+
+        $grafik = [];
+
+        $get = $this->Grafik_model->get_rata2_skp_individu($tahun, $bulan, $user);
+
+        foreach ($get->result() as $row) {
+            $grafik[] = [
+                'rata2' => round($row->nilai, 2),
+                'nama' => $row->no
+            ];
+        }
+
         echo json_encode($grafik);
     }
 }

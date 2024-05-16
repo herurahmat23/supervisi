@@ -660,7 +660,7 @@ class Instrumen_penilaian extends CI_Controller
         $bulan = $this->input->post('bulan');
         $tahun = $this->input->post('tahun');
         $data['data_rtl'] = $this->Instrumen_penilaian_model->laporan_rtl($ruangan, $bulan, $tahun);
-        $data['data_user'] = $this->db->get_where('user', ['ruangan' => $ruangan])->result();
+        $data['data_user'] = $this->db->get_where('user', ['ruangan' => $ruangan, 'role' => '6'])->result();
         $this->load->view('hasil_penilaian/view_table_rtl', $data);
     }
 }
