@@ -670,7 +670,14 @@ class WS_model extends CI_Model
 
 
 
-    function loadInstrumen($mninstrumen)
+    public function getUserByRuangan($ruanganId)
     {
+        $this->db->select('id, nama');
+        $this->db->from('user');
+        $this->db->where('ruangan', $ruanganId);
+        $this->db->where('role', 6);
+        $query = $this->db->get();
+
+        return $query->result();
     }
 }

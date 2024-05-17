@@ -441,6 +441,30 @@ class WS extends CI_Controller
 
 
 
+    function getstaffRuangan($id)
+    {
+        $index = 1;
+        $data_ = array();
+
+
+        $data = array("id" => "0", "nama" => "Pilih Staff");
+        $data_[0] = $data;
+
+        $dat = $this->WS_model->getUserByRuangan($id);
+
+        if (count($dat) > 0) {
+            foreach ($dat as $dat) {
+                $temp = array("id" => $dat->id, "nama" => $dat->nama);
+                $data_[$index] = $temp;
+                $index++;
+            }
+        }
+
+        $bulan = '{values: ' . json_encode($data_) . '}';
+        echo $bulan;
+    }
+
+
     function get_grafik_rata_individu()
     {
         $tahun = $this->input->post('tahun');
@@ -550,6 +574,30 @@ class WS extends CI_Controller
             );
             $i++;
         }
+        $data = '{data: ' . json_encode($grafik) . '}';
+
+        echo $data;
+    }
+
+
+    function get_grafik_rata_per_user()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $user = $this->input->post('user');
+
+        $grafik = array();
+        $i = 0;
+        $get = $this->Grafik_model->get_rata2_skp_individu($tahun, $bulan, $user);
+
+        foreach ($get->result() as $row) {
+            $grafik[$i] = array(
+                'rata2' => round($row->nilai, 2),
+                'nama' => $row->no
+            );
+            $i++;
+        }
+
         $data = '{data: ' . json_encode($grafik) . '}';
 
         echo $data;
