@@ -142,7 +142,6 @@ class Grafik_model extends CI_Model
                 user.nama 
             ORDER BY
                 kategori_instrumen_skp.NO ASC
-
         ");
     }
 }

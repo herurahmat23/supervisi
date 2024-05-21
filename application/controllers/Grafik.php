@@ -18,6 +18,7 @@ class Grafik extends CI_Controller
         $header['title'] = "Grafik Hasil Supervisi";
         $header['menu'] = "mn_grafik";
         $data['ruangan'] = $this->db->get('ruangan')->result();
+        $data['skp'] = $this->db->order_by('id', 'ASC')->get('kategori_instrumen_skp')->result();
         $this->load->view('template/Header', $header);
         $this->load->view('grafik/Index', $data);
         $this->load->view('template/Footer');
@@ -153,6 +154,39 @@ class Grafik extends CI_Controller
             $grafik[] = [
                 'rata2' => round($row->nilai, 2),
                 'nama' => $row->no
+            ];
+        }
+
+        echo json_encode($grafik);
+    }
+
+    public function get_grafik_rata_ruangan_per_skp()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $skp = $this->input->post('skp');
+
+        $ruangan = $this->db->order_by('id', 'ASC')->get('ruangan')->result();
+
+        $grafik = [];
+
+        foreach ($ruangan as $u) {
+            $get = $this->Grafik_model->get_rata2_skp($tahun, $bulan, $u->id, $skp);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[] = [
+                'rata2' => round($rata, 2),
+                'nama' => $u->ruangan
             ];
         }
 
