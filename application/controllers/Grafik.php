@@ -17,7 +17,7 @@ class Grafik extends CI_Controller
     {
         $header['title'] = "Grafik Hasil Supervisi";
         $header['menu'] = "mn_grafik";
-        $data['ruangan'] = $this->db->get('ruangan')->result();
+        $data['ruangan'] = $this->db->order_by('id', 'ASC')->where('ruangan NOT LIKE', '%MANAJEMEN%')->get('ruangan')->result();
         $data['skp'] = $this->db->order_by('id', 'ASC')->get('kategori_instrumen_skp')->result();
         $this->load->view('template/Header', $header);
         $this->load->view('grafik/Index', $data);
@@ -166,7 +166,7 @@ class Grafik extends CI_Controller
         $bulan = $this->input->post('bulan');
         $skp = $this->input->post('skp');
 
-        $ruangan = $this->db->order_by('id', 'ASC')->get('ruangan')->result();
+        $ruangan = $this->db->order_by('id', 'ASC')->where('ruangan NOT LIKE', '%MANAJEMEN%')->get('ruangan')->result();
 
         $grafik = [];
 

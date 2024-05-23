@@ -857,16 +857,23 @@
                     nama.push(data[i].nama);
                 }
 
+                // Menghitung rata-rata dari data 'rata'
+                let total = rata.reduce((sum, value) => sum + value, 0);
+                let average = total / rata.length;
+
+                // Membuat array rata-rata untuk setiap elemen di 'rata'
+                let averageArray = new Array(rata.length).fill(average);
+
                 $('#chart_rata_ruangan_per_skp').remove();
                 $('#container_chart_rata_ruangan_per_skp').append('<canvas id="chart_rata_ruangan_per_skp" style="height: 350px;"></canvas>');
 
-                var ctx_imprs = document.getElementById('chart_rata_ruangan_per_skp').getContext('2d')
+                var ctx_imprs = document.getElementById('chart_rata_ruangan_per_skp').getContext('2d');
                 var chart_rata_ruangan_per_skp = new Chart(ctx_imprs, {
                     type: 'bar',
                     data: {
                         labels: nama,
                         datasets: [{
-                            label: 'Rata rata',
+                            label: 'Rata rata Rumah Sakit: ' + average,
                             data: rata,
                             backgroundColor: 'rgba(1, 19, 248, 0.8)',
                             borderColor: 'rgba(1, 19, 248, 0.8)',
@@ -887,10 +894,9 @@
                             }],
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true, // Mulai sumbu Y dari 0
+                                    beginAtZero: true,
                                     min: 0,
-                                    // Tambahkan nilai maksimal sumbu Y di sini
-                                    max: Math.max(...rata) + 10 // Maksimum adalah nilai tertinggi dari data + 10
+                                    max: Math.max(...rata) + 10
                                 }
                             }]
                         },
