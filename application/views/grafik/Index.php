@@ -857,12 +857,13 @@
                     nama.push(data[i].nama);
                 }
 
-                // Menghitung rata-rata dari data 'rata'
+
+                // Menghitung rata-rata dari data 'rata' dan membulatkannya hingga 4 digit setelah koma
                 let total = rata.reduce((sum, value) => sum + value, 0);
-                let average = total / rata.length;
+                let average = (total / rata.length).toFixed(2);
 
                 // Membuat array rata-rata untuk setiap elemen di 'rata'
-                let averageArray = new Array(rata.length).fill(average);
+                let averageArray = new Array(rata.length).fill(parseFloat(average));
 
                 $('#chart_rata_ruangan_per_skp').remove();
                 $('#container_chart_rata_ruangan_per_skp').append('<canvas id="chart_rata_ruangan_per_skp" style="height: 350px;"></canvas>');
@@ -873,7 +874,7 @@
                     data: {
                         labels: nama,
                         datasets: [{
-                            label: 'Rata rata Rumah Sakit: ' + average,
+                            label: 'Rata rata',
                             data: rata,
                             backgroundColor: 'rgba(1, 19, 248, 0.8)',
                             borderColor: 'rgba(1, 19, 248, 0.8)',
@@ -881,6 +882,8 @@
                             pointBackgroundColor: 'rgba(1, 19, 248, 0.8)',
                             tension: 0,
                             fill: false
+                        }, {
+                            label: 'Rata rata Rumah Sakit: ' + average,
                         }]
                     },
                     options: {
