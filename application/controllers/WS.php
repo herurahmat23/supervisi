@@ -57,6 +57,51 @@ class WS extends CI_Controller
     }
 
 
+    function getRuanganSpinner_no_manajemen()
+    {
+        $index = 1;
+        $data_ = array();
+
+
+        $data = array("id" => "0", "ruangan" => "Pilih Ruangan");
+        $data_[0] = $data;
+
+        $dat = $this->db->order_by('id', 'ASC')->where('ruangan NOT LIKE', '%MANAJEMEN%')->get('ruangan')->result();
+
+
+        foreach ($dat as $dat) {
+            $temp = array("id" => $dat->id, "ruangan" => $dat->ruangan);
+            $data_[$index] = $temp;
+            $index++;
+        }
+        $bulan = '{values: ' . json_encode($data_) . '}';
+        echo $bulan;
+    }
+
+
+
+    function getSkpSpinner()
+    {
+        $index = 1;
+        $data_ = array();
+
+
+        $data = array("id" => "0", "skp" => "Pilih SKP");
+        $data_[0] = $data;
+
+        $dat = $this->db->get('kategori_instrumen_skp')->result();
+
+
+        foreach ($dat as $dat) {
+            $temp = array("id" => $dat->id, "skp" => $dat->no);
+            $data_[$index] = $temp;
+            $index++;
+        }
+        $bulan = '{values: ' . json_encode($data_) . '}';
+        echo $bulan;
+    }
+
+
 
     public function tentang_rs()
     {
@@ -594,6 +639,46 @@ class WS extends CI_Controller
             $grafik[$i] = array(
                 'rata2' => round($row->nilai, 2),
                 'nama' => $row->no
+            );
+            $i++;
+        }
+
+        $data = '{data: ' . json_encode($grafik) . '}';
+
+        echo $data;
+    }
+
+
+
+    public function get_grafik_rata_ruangan_per_skp()
+    {
+        $tahun = $this->input->post('tahun');
+        $bulan = $this->input->post('bulan');
+        $skp = $this->input->post('skp');
+
+        $ruangan = $this->db->order_by('id', 'ASC')->where('ruangan NOT LIKE', '%MANAJEMEN%')->get('ruangan')->result();
+
+
+        $grafik = array();
+        $i = 0;
+
+        foreach ($ruangan as $u) {
+            $get = $this->Grafik_model->get_rata2_skp($tahun, $bulan, $u->id, $skp);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[$i] = array(
+                'rata2' => round($row->nilai, 2),
+                'nama' => $row->ruangan
             );
             $i++;
         }

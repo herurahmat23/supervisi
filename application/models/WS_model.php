@@ -102,6 +102,7 @@ class WS_model extends CI_Model
         jadwal.jadwal_tanggal, 
         jadwal.jadwal_status,
         jabatan.jabatan, 
+        user.jabatan AS jabatan_id,
         ruangan.ruangan';
 
         $from = 'FROM jadwal
@@ -165,7 +166,7 @@ class WS_model extends CI_Model
 
         if ($id_role == '3') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='3' AND jadwal.jadwal_status ='0'
+            WHERE jadwal.jadwal_status ='0'
             ");
         } elseif ($id_role == '4') {
             $query = $this->db->query("$select $from
@@ -395,7 +396,7 @@ class WS_model extends CI_Model
         $query_2 = "";
         if ($id_role == '3') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='3' AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            WHERE jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
 
             $query_2 = $this->db->query("$select $from
@@ -403,7 +404,7 @@ class WS_model extends CI_Model
             ");
         } elseif ($id_role == '4') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='4' AND  user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
+            WHERE (user.jabatan='4' OR user.jabatan='5') AND  user.ruangan='$ruangan' AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
 
             $query_2 = $this->db->query("$select $from
