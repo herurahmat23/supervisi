@@ -677,8 +677,8 @@ class WS extends CI_Controller
             }
 
             $grafik[$i] = array(
-                'rata2' => round($row->nilai, 2),
-                'nama' => $row->ruangan
+                'rata2' => round($rata, 2),
+                'nama' =>  $u->ruangan
             );
             $i++;
         }
