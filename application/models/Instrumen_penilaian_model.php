@@ -279,7 +279,7 @@ class Instrumen_penilaian_model extends CI_Model
         WHERE jadwal_id='$jadwal_id' AND kategori_instrumen_skp.id='$kategori'
              ORDER BY instrumen_skp.no ASC");
 
-        return $data->result();
+        return $data;
     }
 
 

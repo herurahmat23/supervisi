@@ -614,9 +614,15 @@ class Instrumen_penilaian extends CI_Controller
 
     function hasil_staff_cetak($kategori, $jadwal_id)
     {
-        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff_cetak($kategori, $jadwal_id);
-        $data['judul1'] = "INSTRUMEN SUPERVISI " . $data['data'][0]->kategori_instrumen;
-        $data['judul2'] = "RAWAT INAP RSJKO EHD PROVINSI KEPULAUAN RIAU";
+        $hasil = $this->Instrumen_penilaian_model->hasil_staff_cetak($kategori, $jadwal_id);
+        if ($hasil->num_rows() > 0) {
+            $data = $hasil->result();
+            $data['data'] = $data;
+            $data['judul1'] = "INSTRUMEN SUPERVISI " . $data['data'][0]->kategori_instrumen;
+            $data['judul2'] = "RAWAT INAP RSJKO EHD PROVINSI KEPULAUAN RIAU";
+        } else {
+            $data['data'] = "";
+        }
         $this->load->view('hasil_penilaian/cetak', $data);
     }
 
