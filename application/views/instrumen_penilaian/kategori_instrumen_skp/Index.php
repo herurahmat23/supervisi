@@ -59,7 +59,7 @@
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="kategori" class="form-control">
                     </div>
-                    <input type="hidden" name="jenis" id="jenis" value="2">
+                    <!-- <input type="hidden" name="jenis" id="jenis" value="2"> -->
                     <!-- <div class="form-group">
                         <label for="">Jenis</label>
                         <select name="jenis" id="jenis" class="form-control">
@@ -106,7 +106,7 @@
                         <label for="">Nama Kategori</label>
                         <input type="text" name="kategori" id="e_kategori" class="form-control">
                     </div>
-                    <input type="hidden" name="jenis" id="e_jenis" value="2">
+                    <!-- <input type="hidden" name="jenis" id="e_jenis" value="2"> -->
                     <!-- <div class="form-group">
                         <label for="">Jenis</label>
                         <select name="jenis" id="e_jenis" class="form-control">

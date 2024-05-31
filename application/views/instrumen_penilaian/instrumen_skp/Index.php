@@ -35,21 +35,22 @@
                             <?php
                             $group = '';
                             foreach ($kategori as $r) {
-                                if ($r->jenis == "1") {
-                                    $jenis = 'Kemenkes';
-                                } else  if ($r->jenis == "2") {
-                                    $jenis = 'SPO Rumah Sakit';
-                                }
-                                if ($r->jenis != $group) {
-                                    if ($group !== null) {
-                                        echo '</optgroup>';
-                                    }
-                                    echo '<optgroup label="' . $jenis  . '">';
-                                    $group = $r->jenis;
-                                }
+                                // if ($r->jenis == "1") {
+                                //     $jenis = 'Kemenkes';
+                                // } else  if ($r->jenis == "2") {
+                                //     $jenis = 'SPO Rumah Sakit';
+                                // }
+                                // if ($r->jenis != $group) {
+                                //     if ($group !== null) {
+                                //         echo '</optgroup>';
+                                //     }
+                                //     echo '<optgroup label="' . $jenis  . '">';
+                                //     $group = $r->jenis;
+                                // }
                                 echo '<option value="' . $r->id . '">' . $r->no . ' - ' . $r->kategori . '</option>';
                             }
-                            echo '</optgroup>'; ?>
+                            // echo '</optgroup>'; 
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -89,21 +90,22 @@
                             <?php
                             $group = '';
                             foreach ($kategori as $r) {
-                                if ($r->jenis == "1") {
-                                    $jenis = 'Kemenkes';
-                                } else  if ($r->jenis == "2") {
-                                    $jenis = 'SPO Rumah Sakit';
-                                }
-                                if ($r->jenis != $group) {
-                                    if ($group !== null) {
-                                        echo '</optgroup>';
-                                    }
-                                    echo '<optgroup label="' . $jenis  . '">';
-                                    $group = $r->jenis;
-                                }
+                                // if ($r->jenis == "1") {
+                                //     $jenis = 'Kemenkes';
+                                // } else  if ($r->jenis == "2") {
+                                //     $jenis = 'SPO Rumah Sakit';
+                                // }
+                                // if ($r->jenis != $group) {
+                                //     if ($group !== null) {
+                                //         echo '</optgroup>';
+                                //     }
+                                //     echo '<optgroup label="' . $jenis  . '">';
+                                //     $group = $r->jenis;
+                                // }
                                 echo '<option value="' . $r->id . '">' . $r->no . ' - ' . $r->kategori . '</option>';
                             }
-                            echo '</optgroup>'; ?>
+                            // echo '</optgroup>'; 
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">

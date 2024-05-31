@@ -140,7 +140,7 @@ class Instrumen_penilaian extends CI_Controller
     {
         $this->form_validation->set_rules('no', 'No Kategori', 'trim|required|xss_clean');
         $this->form_validation->set_rules('kategori', 'Kategori', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('jenis', 'Jenis', 'trim|required|xss_clean');
+        // $this->form_validation->set_rules('jenis', 'Jenis', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == false) {
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
@@ -148,7 +148,7 @@ class Instrumen_penilaian extends CI_Controller
             $data = [
                 'no' => $this->input->post('no'),
                 'kategori' => $this->input->post('kategori'),
-                'jenis' => $this->input->post('jenis')
+                // 'jenis' => $this->input->post('jenis')
             ];
             $this->db->insert('kategori_instrumen_skp', $data);
             $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
