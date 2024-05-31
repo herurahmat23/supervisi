@@ -29,7 +29,7 @@ class WS_model extends CI_Model
             ->where('user.nik', $username)
             ->get()->row();
 
-        if ($cek->jabatan == '1' || $cek->jabatan == '2' || $cek->jabatan == '') {
+        if ($cek->role == '2' || $cek->role == '3' || $cek->role == '') {
             return $this->db->select('*')
                 ->from('ruangan')
                 ->where('ruangan.is_active', '1')
