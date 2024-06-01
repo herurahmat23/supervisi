@@ -192,4 +192,47 @@ class Grafik extends CI_Controller
 
         echo json_encode($grafik);
     }
+
+    public function get_grafik_rata_per_user_triwulan()
+    {
+        $tahun = $this->input->post('tahun');
+        $triwulan = $this->input->post('triwulan');
+        $user = $this->input->post('user');
+
+        $arrayBulanAngka = [];
+        if ($triwulan == 'tw1') {
+            $arrayBulanAngka = array('01', '02', '03');
+        } else if ($triwulan == 'tw2') {
+            $arrayBulanAngka = array('04', '05', '06');
+        } else if ($triwulan == 'tw3') {
+            $arrayBulanAngka = array('07', '08', '09');
+        } else if ($triwulan == 'tw4') {
+            $arrayBulanAngka = array('10', '11', '12');
+        }
+        $grafik = [];
+        $arrayBulanNama = [];
+
+        foreach ($arrayBulanAngka as $bulan) {
+            $namaBulan = date('F', mktime(0, 0, 0, $bulan, 1));
+            $arrayBulanNama[] = $namaBulan;
+            $get = $this->Grafik_model->get_rata2_skp_individu($tahun, $bulan, $user);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[] = [
+                'rata2' => round($rata, 2),
+                'nama' => $namaBulan
+            ];
+        }
+        echo json_encode($grafik);
+    }
 }

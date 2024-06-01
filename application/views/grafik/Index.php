@@ -59,6 +59,21 @@
             </a>
         </div>
     </div>
+    <div class="col-lg-6 col-6">
+        <!-- small card -->
+        <div class="small-box bg-lightblue">
+            <div class="inner">
+                <h4>Grafik Laporan SKP Individu Per Triwulan</h4>
+                <br>
+            </div>
+            <div class="icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <a data-toggle="modal" data-target="#modal_grafik_5" class="small-box-footer">
+                Go <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div id="modal_grafik_1" class="modal fade" tabindex="-1" aria-hidden="true">
@@ -343,6 +358,72 @@
     </div>
 </div>
 
+<div id="modal_grafik_5" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Grafik Laporan SKP Individu Per Triwulan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <form class="form-inline">
+                        <label class="mr-2" for="bulan">Triwulan:</label>
+                        <select class="form-control mr-4" id="triwulan" name="triwulan">
+                            <option value="tw1">Triwulan 1</option>
+                            <option value="tw2">Triwulan 2</option>
+                            <option value="tw3">Triwulan 3</option>
+                            <option value="tw4">Triwulan 4</option>
+                        </select>
+
+                        <label class="mr-2" for="tahun">Tahun:</label>
+                        <select class="form-control mr-4" id="tahun4" name="tahun">
+                            <?php
+                            $tahun_sekarang = date("Y");
+                            for ($tahun = 2024; $tahun <= 2030; $tahun++) {
+                                echo "<option value='" . $tahun . "'>" . $tahun . "</option>";
+                            }
+                            ?>
+                        </select>
+
+                        <label class="mr-2" for="">Ruangan:</label>
+                        <select class="form-control mr-4" id="ruangan_id2" name="ruangan">
+                            <option>PILIH RUANGAN</option>
+                            <?php foreach ($ruangan as $r) : ?>
+                                <option value="<?= $r->id ?>"><?= $r->ruangan ?></option>
+                            <?php endforeach ?>
+                        </select>
+
+                        <label class="mr-2" for="">Nama Perawat:</label>
+                        <select class="form-control mr-4" id="user_select2">
+                            <option value="">Pilih User</option>
+                        </select>
+                    </form>
+                    <button class="btn btn-primary mt-3" type="button" onclick="get_grafik_individu_triwulan()"><i class="fas fa-eye"></i> View Data</button>
+                </div>
+
+                <hr>
+                <div class="card" style="padding: 0;" id="container_chart_rata_skp_individu_triwulan">
+                    <div class="card-header">
+                        <h5 class="card-title" id="judul_indikator">NILAI SKP INDIVIDU PER TRIWULAN</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-primary" id="printChart_6"><i class="fas fa-print"></i> Print Chart</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chart_rata_skp_individu_triwulan" style="height: 350px;"></canvas>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" aria-hidden="true" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 <!-- ChartJS -->
 <script src="<?= base_url('assets/') ?>plugins/chart.js/Chart.min.js"></script>
@@ -364,6 +445,25 @@
                     success: function(data) {
                         $('#user_select').html(data);
                         $('#user_select').show(); // Tampilkan select user
+                    }
+                });
+            }
+        });
+
+        $('#ruangan_id2').change(function() {
+            var ruanganId = $(this).val();
+            if (ruanganId === '') {
+                $('#user_select2').hide(); // Sembunyikan select user
+            } else {
+                $.ajax({
+                    url: '<?php echo base_url('Grafik/get_user_by_ruangan'); ?>',
+                    method: 'POST',
+                    data: {
+                        ruangan_id: ruanganId
+                    },
+                    success: function(data) {
+                        $('#user_select2').html(data);
+                        $('#user_select2').show(); // Tampilkan select user
                     }
                 });
             }
@@ -471,7 +571,6 @@
             };
         });
 
-
         $('#printChart_4').click(function() {
             let canvas = document.getElementById('chart_rata_skp_individu');
             let dataUrl = canvas.toDataURL(); // Konversi canvas ke data URL
@@ -543,6 +642,42 @@
         });
     });
 
+    $('#printChart_6').click(function() {
+        let canvas = document.getElementById('chart_rata_skp_individu_triwulan');
+        let dataUrl = canvas.toDataURL(); // Konversi canvas ke data URL
+
+
+        let chartTitle = 'NILAI SKP INDIVIDU PER TRIWULAN';
+        let tahun = $('#tahun3 option:selected').text()
+        let triwulan = $('#triwulan option:selected').text()
+        let ruang = $('#ruangan_id option:selected').text()
+        let nama = $('#user_select option:selected').text()
+
+        // Buat jendela baru untuk mencetak
+        let printWindow = window.open('', '_blank');
+        printWindow.document.write('<html><head>');
+        printWindow.document.write('<style>');
+        printWindow.document.write('body{font-family: Arial, sans-serif; text-align: center;}');
+        printWindow.document.write('h1{font-size: 24px; margin-bottom: 0;}');
+        printWindow.document.write('p{margin: 5px 0 20px;font-size: 16px; text-align: left; margin-left: 20px;}');
+        printWindow.document.write('img{max-width: 100%;}');
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write('<h1>' + chartTitle + '</h1>'); // Tambahkan judul
+        printWindow.document.write('<p>Tahun: ' + tahun + '</p>');
+        printWindow.document.write('<p>Triwulan: ' + triwulan + '</p>');
+        printWindow.document.write('<p>Nama: ' + nama + '</p>');
+        printWindow.document.write('<p>Ruangan: ' + ruang + '</p>');
+        printWindow.document.write('<img src="' + dataUrl + '"/>'); // Masukkan gambar ke dalam jendela
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.onload = function() {
+            printWindow.focus(); // Fokus pada jendela baru
+            printWindow.print(); // Jalankan perintah print
+            printWindow.close(); // Tutup jendela setelah mencetak
+        };
+    });
+
     function get_grafik_bulanan() {
         get_grafik_rata_individu()
         get_grafik_rata_skp()
@@ -558,6 +693,10 @@
 
     function get_grafik_rata_ruanganperskp() {
         get_grafik_rata_ruangan_per_skp()
+    }
+
+    function get_grafik_individu_triwulan() {
+        get_grafik_skp_individu_triwulan()
     }
 
     function get_grafik_rata_individu() {
@@ -900,6 +1039,85 @@
                                     beginAtZero: true,
                                     min: 0,
                                     max: Math.max(...rata) + 10
+                                }
+                            }]
+                        },
+                        layout: {
+                            padding: 0
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function get_grafik_skp_individu_triwulan() {
+        let tahun = $('#tahun4').val();
+        let triwulan = $('#triwulan').val();
+        let user = $('#user_select2').val();
+
+        $.ajax({
+            url: '<?= site_url('Grafik/get_grafik_rata_per_user_triwulan') ?>',
+            type: 'post',
+            data: {
+                tahun: tahun,
+                triwulan: triwulan,
+                user: user
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                let rata = [];
+                let nama = [];
+
+                for (let i in data) {
+                    rata.push(data[i].rata2);
+                    nama.push(data[i].nama);
+                }
+
+
+                // Menghitung rata-rata dari data 'rata' dan membulatkannya hingga 4 digit setelah koma
+                let total = rata.reduce((sum, value) => sum + value, 0);
+                let average = (total / rata.length).toFixed(2);
+
+                // Membuat array rata-rata untuk setiap elemen di 'rata'
+                let averageArray = new Array(rata.length).fill(parseFloat(average));
+
+                $('#chart_rata_skp_individu_triwulan').remove();
+                $('#container_chart_rata_skp_individu_triwulan').append('<canvas id="chart_rata_skp_individu_triwulan" style="height: 350px;"></canvas>');
+
+                var ctx_imprs = document.getElementById('chart_rata_skp_individu_triwulan').getContext('2d')
+                var chart_rata_individu = new Chart(ctx_imprs, {
+                    type: 'bar',
+                    data: {
+                        labels: nama,
+                        datasets: [{
+                            label: 'Rata rata',
+                            data: rata,
+                            backgroundColor: 'rgba(1, 19, 248, 0.8)',
+                            borderColor: 'rgba(1, 19, 248, 0.8)',
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(1, 19, 248, 0.8)',
+                            tension: 0,
+                            fill: false
+                        }, {
+                            label: 'Rata rata Triwulan: ' + average,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        interaction: {
+                            intersect: false,
+                        },
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true, // Mulai sumbu Y dari 0
+                                    min: 0,
+                                    // Tambahkan nilai maksimal sumbu Y di sini
+                                    max: Math.max(...rata) + 10 // Maksimum adalah nilai tertinggi dari data + 10
                                 }
                             }]
                         },
