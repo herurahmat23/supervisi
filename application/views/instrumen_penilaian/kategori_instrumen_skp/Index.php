@@ -38,21 +38,6 @@
                             <option value="SKP 4">SKP 4</option>
                             <option value="SKP 5">SKP 5</option>
                             <option value="SKP 6">SKP 6</option>
-
-                            <option value="SKP 7">SKP 7</option>
-                            <option value="SKP 8">SKP 8</option>
-                            <option value="SKP 9">SKP 9</option>
-                            <option value="SKP 10">SKP 10</option>
-                            <option value="SKP 11">SKP 11</option>
-                            <option value="SKP 12">SKP 12</option>
-                            <option value="SKP 13">SKP 13</option>
-                            <option value="SKP 14">SKP 14</option>
-                            <option value="SKP 15">SKP 15</option>
-                            <option value="SKP 16">SKP 16</option>
-                            <option value="SKP 17">SKP 17</option>
-                            <option value="SKP 18">SKP 18</option>
-                            <option value="SKP 19">SKP 19</option>
-                            <option value="SKP 20">SKP 20</option>
                         </select>
                     </div>
                     <div class="form-group">
