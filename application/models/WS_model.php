@@ -214,12 +214,12 @@ class WS_model extends CI_Model
 
         if ($id_role != '4' && $id_role != '5') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='5'  AND jadwal.jadwal_status ='0'
+            WHERE user.jabatan='5'  AND jadwal.jadwal_status ='0' AND sp_jadwal_id='$jadwal_id'
             GROUP BY kategori_instrumen_skp.id
             ");
         } else {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='5' AND user.ruangan='$ruangan'  AND jadwal.jadwal_status ='0'
+            WHERE user.jabatan='5' AND user.ruangan='$ruangan'  AND jadwal.jadwal_status ='0' AND sp_jadwal_id='$jadwal_id'
             GROUP BY kategori_instrumen_skp.id
             ");
         }
