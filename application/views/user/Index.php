@@ -117,7 +117,7 @@
                             <label for="foto">Foto</label>
                             <input type="file" class="form-control" name="foto" id="foto">
                             <footer class="text-danger">
-                                *File Type JPEG
+                                *File Type png
                             </footer>
                         </div>
                     </div>
@@ -233,7 +233,7 @@
                             <input type="file" class="form-control" name="foto" id="e_foto_baru">
                             <input type="hidden" class="form-control" name="old_foto" id="e_foto">
                             <footer class="text-danger">
-                                *File Type JPEG
+                                *File Type png
                             </footer>
                         </div>
                     </div>

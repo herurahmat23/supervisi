@@ -50,9 +50,8 @@ class User extends CI_Controller
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
             // $upload_image = $_FILES['foto'];
-            $config['upload_path']          = './uploads/foto_profil';
-            $config['allowed_types']        = 'jpeg|jpg';
-            $config['max_size']             = 1000;
+            $config['upload_path']          = './profil';
+            $config['allowed_types']        = 'png';
             $config['overwrite']            = true;
             $config['file_name']            = $this->input->post('nik');
             $this->upload->initialize($config);
@@ -60,7 +59,7 @@ class User extends CI_Controller
             if (!empty($_FILES['foto']['name'])) {
 
                 if ($this->upload->do_upload('foto')) {
-                    $new_name = $this->upload->data('file_name');
+                    // $new_name = $this->upload->data('file_name');
                     $data = [
                         'nik' => $this->input->post('nik'),
                         'nama' => $this->input->post('nama'),
@@ -75,7 +74,7 @@ class User extends CI_Controller
                         'pelatihan_patient_safety' => $this->input->post('pelatihan_patient_safety'),
                         'no_sertifikat_patient_safety' => $this->input->post('no_sertifikat_patient_safety'),
                         'tahun_pelatihan_patient_safety' => $this->input->post('tahun_pelatihan_patient_safety'),
-                        'foto' => $new_name
+                        // 'foto' => $new_name
                     ];
                     $this->db->insert('user', $data);
                     $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
@@ -124,18 +123,17 @@ class User extends CI_Controller
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
             // $upload_image = $_FILES['foto'];
-            $config['upload_path']          = './uploads/foto_profil';
-            $config['allowed_types']        = 'jpeg|jpg';
-            $config['max_size']             = 1000;
+            $config['upload_path']          = './profil';
+            $config['allowed_types']        = 'png';
             $config['overwrite']            = true;
             $config['file_name']            = $this->input->post('nik');
             $this->upload->initialize($config);
 
             if (!empty($_FILES['foto']['name'])) {
                 if ($this->upload->do_upload('foto')) {
-                    $old_foto = $this->input->post('old_foto');
-                    unlink(FCPATH . 'uploads/foto_profil/' . $old_foto);
-                    $new_name = $this->upload->data('file_name');
+                    // $old_foto = $this->input->post('old_foto');
+                    // unlink(FCPATH . 'uploads/foto_profil/' . $old_foto);
+                    // $new_name = $this->upload->data('file_name');
                     $data = [
                         'nik' => $this->input->post('nik'),
                         'nama' => $this->input->post('nama'),
@@ -149,7 +147,7 @@ class User extends CI_Controller
                         'pelatihan_patient_safety' => $this->input->post('pelatihan_patient_safety'),
                         'no_sertifikat_patient_safety' => $this->input->post('no_sertifikat_patient_safety'),
                         'tahun_pelatihan_patient_safety' => $this->input->post('tahun_pelatihan_patient_safety'),
-                        'foto' => $new_name
+                        // 'foto' => $new_name
                     ];
                     $this->db->where('id', $this->input->post('id'));
                     $this->db->update('user', $data);
@@ -200,11 +198,42 @@ class User extends CI_Controller
 
     public function delete()
     {
-        $this->db->select('foto');
-        $query = $this->db->get_where('user', array('id' => $this->input->post('id')))->row();
-        unlink(FCPATH . 'uploads/foto_profil/' . $query->foto);
-        $this->db->where('id', $this->input->post('id'));
+        $id = $this->input->post('id');
+
+        // Periksa apakah ID tersedia
+        if (!$id) {
+            $array = array('status' => 'error', 'message' => 'ID tidak tersedia.');
+            echo json_encode($array);
+            return;
+        }
+
+        // Dapatkan nama file foto dari database
+        $this->db->select('nik');
+        $query = $this->db->get_where('user', array('id' => $id))->row();
+
+        // Periksa apakah query mengembalikan hasil
+        if (!$query) {
+            $array = array('status' => 'error', 'message' => 'Data tidak ditemukan.');
+            echo json_encode($array);
+            return;
+        }
+
+        $foto_filename = FCPATH . 'profil/' . $query->nik . '.png';
+
+        // Periksa apakah file foto ada sebelum mencoba menghapusnya
+        if (file_exists($foto_filename)) {
+            // Hapus file foto
+            if (!unlink($foto_filename)) {
+                $array = array('status' => 'error', 'message' => 'Gagal menghapus file foto.');
+                echo json_encode($array);
+                return;
+            }
+        }
+
+        // Hapus data dari database
+        $this->db->where('id', $id);
         $this->db->delete('user');
+
         $array = array('status' => 'success', 'message' => 'Data Berhasil Dihapus.');
         echo json_encode($array);
     }
