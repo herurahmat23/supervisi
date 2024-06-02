@@ -604,10 +604,10 @@ class Instrumen_penilaian extends CI_Controller
     {
         $header['title'] = "Hasil Penilaian Perawat";
         $header['menu'] = "mn_instrumen";
-        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff();
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff_web();
 
         $this->load->view('template/Header', $header);
-        $this->load->view('hasil_penilaian/view', $data);
+        $this->load->view('hasil_penilaian/view_hasil_pp', $data);
         $this->load->view('template/Footer');
     }
 

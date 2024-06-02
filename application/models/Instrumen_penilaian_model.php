@@ -239,6 +239,29 @@ class Instrumen_penilaian_model extends CI_Model
         return $data->result();
     }
 
+    function hasil_staff_web()
+    {
+        $data = $this->db->query("
+        SELECT
+            user.nama,
+            jadwal.jadwal_tanggal,
+            jadwal.jadwal_tanggal_selesai,
+            jadwal.jadwal_id,
+            user.id,
+            user.nik,
+            ruangan.ruangan 
+        FROM
+            jadwal
+            INNER JOIN user ON jadwal.jadwal_user_id = user.id
+            INNER JOIN ruangan ON user.ruangan = ruangan.id 
+        WHERE
+             user.jabatan = '5'
+        GROUP BY jadwal_id ORDER BY jadwal_id DESC
+            ");
+
+        return $data->result();
+    }
+
 
 
     function hasil_staff_cetak($kategori, $jadwal_id)
