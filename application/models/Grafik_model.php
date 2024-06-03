@@ -43,6 +43,7 @@ class Grafik_model extends CI_Model
             AND MONTH ( jadwal.jadwal_tanggal )= '$bulan' 
             AND ruangan.id = '$ruangan' 
             AND user.id='$user'
+            AND tanggapan IS NOT NULL AND pengarahan IS NOT NULL AND saran IS NOT NULL
         GROUP BY
         kategori_instrumen_skp.kategori  
         ORDER BY
@@ -72,6 +73,7 @@ class Grafik_model extends CI_Model
             AND MONTH ( jadwal.jadwal_tanggal )= '$bulan' 
             AND ruangan.id = '$ruangan' 
             AND kategori_instrumen_skp.id='$skp'
+            AND tanggapan IS NOT NULL AND pengarahan IS NOT NULL AND saran IS NOT NULL
         GROUP BY
         kategori_instrumen_skp.kategori  
         ORDER BY
@@ -101,6 +103,7 @@ class Grafik_model extends CI_Model
             YEAR ( jadwal.jadwal_tanggal )= '$tahun' 
             AND MONTH ( jadwal.jadwal_tanggal )= '$bulan' 
             AND ruangan.id = '$ruangan' 
+            AND tanggapan IS NOT NULL AND pengarahan IS NOT NULL AND saran IS NOT NULL
         GROUP BY
         kategori_instrumen_skp.kategori  
         ORDER BY
