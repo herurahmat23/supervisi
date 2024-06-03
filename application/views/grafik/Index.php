@@ -1068,16 +1068,20 @@
             success: function(data) {
                 let rata = [];
                 let nama = [];
+                let rata_pertahun = [];
 
                 for (let i in data) {
                     rata.push(data[i].rata2);
                     nama.push(data[i].nama);
+                    rata_pertahun.push(data[i].rata_pertahun);
                 }
 
 
                 // Menghitung rata-rata dari data 'rata' dan membulatkannya hingga 4 digit setelah koma
                 let total = rata.reduce((sum, value) => sum + value, 0);
                 let average = (total / rata.length).toFixed(2);
+
+
 
                 // Membuat array rata-rata untuk setiap elemen di 'rata'
                 let averageArray = new Array(rata.length).fill(parseFloat(average));
@@ -1101,6 +1105,8 @@
                             fill: false
                         }, {
                             label: 'Rata rata Triwulan: ' + average,
+                        }, {
+                            label: 'Rata rata Pertahun: ' + rata_pertahun[0],
                         }]
                     },
                     options: {
