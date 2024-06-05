@@ -97,7 +97,8 @@ class Master extends CI_Controller
             $array = array('status' => 'fail', 'message' => 'Input data gagal: ' . validation_errors());
         } else {
             $data = [
-                'ruangan' => $this->input->post('ruangan')
+                'ruangan' => $this->input->post('ruangan'),
+                'is_active' => 1
             ];
             $this->db->insert('ruangan', $data);
             $array = array('status' => 'success', 'message' => 'Data Berhasil disimpan.');
