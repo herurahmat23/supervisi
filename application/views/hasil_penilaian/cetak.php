@@ -80,7 +80,7 @@ function getRomawi($int)
                 <td>Nama Perawat</td>
                 <td style="width: 40%;"> : <?= $data[0]->nama; ?></td>
                 <td>Hari/Tanggal</td>
-                <td> : <?= !empty($data[0]->jadwal_tanggal_selesai) ? date('d F Y', strtotime($data[0]->jadwal_tanggal_selesai)) : ""; ?></td>
+                <td> : <?= !empty($data[0]->jadwal_tanggal) ? date('d F Y', strtotime($data[0]->jadwal_tanggal)) : ""; ?></td>
             </tr>
             <tr>
                 <td>Supervisor</td>

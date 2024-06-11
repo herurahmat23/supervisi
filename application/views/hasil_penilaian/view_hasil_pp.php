@@ -13,7 +13,7 @@
                         <th class="text-center">Nama</th>
                         <th class="text-center">Ruangan</th>
                         <th class="text-center">Jadwal</th>
-                        <th class="text-center">Selesai</th>
+                        <!-- <th class="text-center">Selesai</th> -->
                         <th class="text-center" width="150px">Aksi</th>
                     </tr>
                 </thead>
@@ -28,7 +28,7 @@
                             <td><?= $dat->nama; ?></td>
                             <td><?= $dat->ruangan; ?></td>
                             <td class="text-center"><?= $dat->jadwal_tanggal; ?></td>
-                            <td class="text-center"><?= $dat->jadwal_tanggal_selesai; ?></td>
+                            <!-- <td class="text-center"><?= $dat->jadwal_tanggal_selesai; ?></td> -->
                             <td class="text-center">
                                 <?php
 
