@@ -626,6 +626,20 @@ class Instrumen_penilaian extends CI_Controller
         $this->load->view('hasil_penilaian/cetak', $data);
     }
 
+    function delete_hasil_staff()
+    {
+        $kategori_id = $this->input->post('kategori');
+        $jadwal_id = $this->input->post('jadwal');
+        $hasil = $this->Instrumen_penilaian_model->get_delete_hasil_staff($kategori_id, $jadwal_id)->result();
+        foreach ($hasil as $h) {
+            $this->db->where('sp_id', $h->sp_id);
+            $this->db->delete('form_supervisi');
+        }
+
+        $this->session->set_flashdata('message', 'Data berhasil dihapus');
+        redirect('Instrumen_penilaian/hasil_staff');
+    }
+
 
 
 

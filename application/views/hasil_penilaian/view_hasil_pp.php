@@ -47,9 +47,11 @@
 
 
                                 foreach ($query as $q) {
-                                    echo '<a sty href="' . base_url('Instrumen_penilaian/hasil_staff_cetak/') . $q->kategori_id . '/' . $dat->jadwal_id . '" target="_blank" title="' . $q->kategori . '" class="btn btn-block btn-info btn-sm"><i class="fas fa-print"></i> ' . $q->no . ' <i class="fas fa-info-circle"></i></a>';
+                                    echo '<div class="btn-group mb-1" role="group" aria-label="Basic example">';
+                                    echo '<a href="' . base_url('Instrumen_penilaian/hasil_staff_cetak/') . $q->kategori_id . '/' . $dat->jadwal_id . '" target="_blank" title="' . $q->kategori . '" class="btn btn-block btn-info btn-sm"><i class="fas fa-print"></i> ' . $q->no . ' <i class="fas fa-info-circle"></i></a>';
+                                    echo '<a onclick="modaldelete(' . $q->kategori_id . ',' . $dat->jadwal_id . ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>';
+                                    echo '</div>';
                                 }
-
                                 ?>
                             </td>
                         </tr>
@@ -60,10 +62,59 @@
     </div>
 </div>
 
+<div class="modal fade" id="deleteData" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Hapus Data</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= site_url('Instrumen_penilaian/delete_hasil_staff') ?>" id="delete-data" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="kategori" id="id_kategori">
+                    <input type="hidden" name="jadwal" id="id_jadwal">
+                    <div class="modal-body">
+                        <h4><span>Apakah Anda Yakin Hapus Data?</span></h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Delete <i class="fas fa-check"></i></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close <i class="fas fa-times"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 
 <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
+    });
+
+    function modaldelete(kategori, jadwal) {
+        $('#id_kategori').val(kategori);
+        $('#id_jadwal').val(jadwal);
+        $('#deleteData').modal('show');
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        <?php if ($this->session->flashdata('message')) : ?>
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses',
+                text: '<?php echo $this->session->flashdata('message'); ?>',
+                toast: true,
+                position: 'top-right',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        <?php endif; ?>
     });
 </script>
