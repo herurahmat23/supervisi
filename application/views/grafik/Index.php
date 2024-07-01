@@ -996,10 +996,14 @@
                     nama.push(data[i].nama);
                 }
 
+                // Filter array rata untuk hanya mengambil nilai yang tidak nol
+                let nonZeroRata = rata.filter(value => value !== 0);
 
-                // Menghitung rata-rata dari data 'rata' dan membulatkannya hingga 4 digit setelah koma
-                let total = rata.reduce((sum, value) => sum + value, 0);
-                let average = (total / rata.length).toFixed(2);
+                // Menghitung total dari nilai yang tidak nol
+                let total = nonZeroRata.reduce((sum, value) => sum + value, 0);
+
+                // Menghitung rata-rata dari total tersebut
+                let average = (total / nonZeroRata.length).toFixed(2);
 
                 // Membuat array rata-rata untuk setiap elemen di 'rata'
                 let averageArray = new Array(rata.length).fill(parseFloat(average));

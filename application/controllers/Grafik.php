@@ -47,7 +47,7 @@ class Grafik extends CI_Controller
         $bulan = $this->input->post('bulan');
         $ruangan = $this->input->post('ruangan');
 
-        $user_peruangan = $this->db->get_where('user', ['ruangan' => $ruangan])->result();
+        $user_peruangan = $this->db->get_where('user', ['ruangan' => $ruangan, 'jabatan' => '5'])->result();
 
         $grafik = [];
 
