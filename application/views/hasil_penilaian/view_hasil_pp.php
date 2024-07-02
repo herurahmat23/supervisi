@@ -49,7 +49,9 @@
                                 foreach ($query as $q) {
                                     echo '<div class="btn-group mb-1" role="group" aria-label="Basic example">';
                                     echo '<a href="' . base_url('Instrumen_penilaian/hasil_staff_cetak/') . $q->kategori_id . '/' . $dat->jadwal_id . '" target="_blank" title="' . $q->kategori . '" class="btn btn-block btn-info btn-sm"><i class="fas fa-print"></i> ' . $q->no . ' <i class="fas fa-info-circle"></i></a>';
-                                    echo '<a onclick="modaldelete(' . $q->kategori_id . ',' . $dat->jadwal_id . ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>';
+                                    if ($this->session->userdata('id_role') == 1) {
+                                        echo '<a onclick="modaldelete(' . $q->kategori_id . ',' . $dat->jadwal_id . ')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>';
+                                    }
                                     echo '</div>';
                                 }
                                 ?>
