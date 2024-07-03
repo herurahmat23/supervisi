@@ -148,6 +148,12 @@ class WS_model extends CI_Model
 
     function getJadwalInstrument($id_role, $ruangan)
     {
+
+        $tanggal = 01;
+        $tanggal = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
+        $tahun = date('Y');
+        $bulan_id = date('m');
+
         $select = 'SELECT 
         jadwal.jadwal_id,
         jadwal.jadwal_user_id,
@@ -166,19 +172,19 @@ class WS_model extends CI_Model
 
         if ($id_role == '3') {
             $query = $this->db->query("$select $from
-            WHERE jadwal.jadwal_status ='0'
+            WHERE jadwal.jadwal_status ='0' AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } elseif ($id_role == '4') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='4' AND  user.ruangan='$ruangan' AND jadwal.jadwal_status ='0'
+            WHERE user.jabatan='4' AND  user.ruangan='$ruangan' AND jadwal.jadwal_status ='0'  AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } elseif ($id_role == '5') {
             $query = $this->db->query("$select $from
-            WHERE user.jabatan='5' AND user.ruangan='$ruangan'  AND jadwal.jadwal_status ='0'
+            WHERE user.jabatan='5' AND user.ruangan='$ruangan'  AND jadwal.jadwal_status ='0'  AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         } else {
             $query = $this->db->query("$select $from
-            WHERE jadwal.jadwal_status ='0'
+            WHERE jadwal.jadwal_status ='0'  AND jadwal.jadwal_tanggal BETWEEN '$tahun-$bulan_id-01' AND '$tahun-$bulan_id-$tanggal'
             ");
         }
         return $query->result();
