@@ -30,7 +30,7 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="">NIK</label>
+                            <label for="">Username</label>
                             <input type="number" name="nik" id="nik" class="form-control">
                         </div>
                         <div class="form-group col-md-4">
@@ -145,7 +145,7 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="">NIK</label>
+                            <label for="">Username</label>
                             <input type="number" name="nik" id="e_nik" class="form-control">
                         </div>
                         <div class="form-group col-md-4">

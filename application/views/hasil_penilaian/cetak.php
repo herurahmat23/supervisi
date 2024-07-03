@@ -8,46 +8,79 @@
         @page {
             margin: 10px;
         }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
     </style>
 </head>
 
-<?php if ($data == "") { ?>
-    <h1>Supervisi Belum Diselesaikan</h1>
+<?php
+function getRomawi($int)
+{
+    switch ($int) {
+        case 1:
+            return "I";
+        case 2:
+            return "II";
+        case 3:
+            return "III";
+        case 4:
+            return "IV";
+        case 5:
+            return "V";
+        case 6:
+            return "VI";
+        case 7:
+            return "VII";
+        case 8:
+            return "VIII";
+        case 9:
+            return "IX";
+        case 10:
+            return "X";
+        case 11:
+            return "XI";
+        case 12:
+            return "XII";
+        default:
+            return "";
+    }
+}
+?>
 
+<?php if (empty($data)) { ?>
+
+    <body>
+        <h1>Supervisi Belum Diselesaikan</h1>
+    </body>
 <?php } else { ?>
 
     <body onload="window.print()">
-
-        <br>
-        <br>
-        <table border="0" align="center" width="90%" style="border-collapse: collapse;">
+        <br><br>
+        <table border="0" align="center" width="90%">
             <tr>
-                <td style="width: 15%;">
-                    <!-- <img src="<?= base_url('assets/dist/img/siatan_logo.png') ?>" style="width: 80px;"> -->
-                </td>
+                <td style="width: 15%;"></td>
                 <td align="center">
                     <h3 style="margin: 0px;"><?= $judul1; ?></h3>
                     <h3 style="margin: 0px;"><?= $judul2; ?></h3>
                 </td>
-                <td align=" right" style="width: 15%;">
-                </td>
+                <td style="width: 15%;" align="right"></td>
             </tr>
             <tr>
-                <td colspan="3">
-                    <!-- <hr style="border: 2px solid black"> -->
-                </td>
+                <td colspan="3"></td>
             </tr>
         </table>
 
         <br><br>
 
-
-        <table style="text-align: left;" align="center" width="90%" style="border-collapse: collapse; border-spacing: 0px;">
+        <table align="center" width="90%">
             <tr>
                 <td>Nama Perawat</td>
                 <td style="width: 40%;"> : <?= $data[0]->nama; ?></td>
                 <td>Hari/Tanggal</td>
-                <td> : <?= ($data[0]->jadwal_tanggal_selesai != "" ? date('d F Y', strtotime($data[0]->jadwal_tanggal_selesai)) : ""); ?></td>
+                <td> : <?= !empty($data[0]->jadwal_tanggal) ? date('d F Y', strtotime($data[0]->jadwal_tanggal)) : ""; ?></td>
             </tr>
             <tr>
                 <td>Supervisor</td>
@@ -55,34 +88,30 @@
                 <td>Ruangan</td>
                 <td> : <?= $data[0]->ruangan_nama; ?></td>
             </tr>
-
             <tr>
                 <td colspan="4">
                     <br>
                     Petunjuk:<br>
                     Beri tanda check list (v) pada kolom “Ya” bila pekerjaan dilakukan dan pada kolom “Tidak” bila pekerjaan tidak dilakukan.
-
                 </td>
             </tr>
         </table>
 
         <br><br>
 
-
-        <table border cellpadding="3" align="center" width="90%" style="border-collapse: collapse;">
+        <table border="1" cellpadding="3" align="center" width="90%">
             <tr style="text-align: center; font-weight: bold;">
-                <th style="text-align: center;" rowspan="2">Kriteria</th>
-                <th style="text-align: center;" colspan="2">Dilakukan</th>
+                <th rowspan="2">Kriteria</th>
+                <th colspan="2">Dilakukan</th>
             </tr>
             <tr>
-                <th style="text-align: center;width: 10%;">Ya</th>
-                <th style="text-align: center;width: 10%;">Tidak</th>
+                <th style="width: 10%;">Ya</th>
+                <th style="width: 10%;">Tidak</th>
             </tr>
             <?php
             $aspek_old = "";
             $no = 0;
             $no2 = 0;
-
             $dilakukan = 0;
             $tidakdilakukan = 0;
             foreach ($data as $dat) {
@@ -96,9 +125,8 @@
             ?>
                     <tr>
                         <td style="padding-left: 30px;"><?= $no2 . '. ' . $dat->instrumen; ?></td>
-                        <td style="text-align: center;"><?= ($dat->sp_jawaban == '1' ? '&#10004;' : ''); ?></td>
-                        <td style="text-align: center;"><?= ($dat->sp_jawaban == '0' ? '&#10004;' : ''); ?></td>
-
+                        <td style="text-align: center;"><?= $dat->sp_jawaban == '1' ? '&#10004;' : ''; ?></td>
+                        <td style="text-align: center;"><?= $dat->sp_jawaban == '0' ? '&#10004;' : ''; ?></td>
                     </tr>
                 <?php } else {
                     $no++; ?>
@@ -109,9 +137,8 @@
                     </tr>
                     <tr>
                         <td style="padding-left: 30px;"><?= $no2 . '. ' . $dat->instrumen; ?></td>
-                        <td style="text-align: center;"><?= ($dat->sp_jawaban == '1' ? '&#10004;' : ''); ?></td>
-                        <td style="text-align: center;"><?= ($dat->sp_jawaban == '0' ? '&#10004;' : ''); ?></td>
-
+                        <td style="text-align: center;"><?= $dat->sp_jawaban == '1' ? '&#10004;' : ''; ?></td>
+                        <td style="text-align: center;"><?= $dat->sp_jawaban == '0' ? '&#10004;' : ''; ?></td>
                     </tr>
             <?php $aspek_old = $dat->aspek;
                 }
@@ -123,7 +150,7 @@
         <?php
         $skor = $dilakukan / ($dilakukan + $tidakdilakukan) * 100;
         ?>
-        <table style="text-align: left;" align="center" width="90%" style="border-collapse: collapse; border-spacing: 0px;">
+        <table align="center" width="90%">
             <tr>
                 <td style="width: 20%;">Keterangan</td>
                 <td style="width: 40%;"></td>
@@ -144,12 +171,10 @@
             </tr>
             <tr>
                 <td>Nilai</td>
-                <td style="width: 40%;"> : <?= $dilakukan; ?> / <?= $dilakukan + $tidakdilakukan; ?> * 100 = <?= round($skor, 2); ?>
-                <td>
+                <td style="width: 40%;"> : <?= $dilakukan; ?> / <?= $dilakukan + $tidakdilakukan; ?> * 100 = <?= round($skor, 2); ?></td>
                 <td></td>
                 <td></td>
             </tr>
-
 
             <tr>
                 <td colspan="2"><br><br></td>
@@ -174,14 +199,9 @@
             </tr>
         </table>
 
+        <br><br><br><br>
 
-
-
-        <br><br> <br><br>
-
-
-
-        <table style="text-align: center;" align="center" width="90%" style="border-collapse: collapse; border-spacing: 0px;">
+        <table align="center" width="90%" style="text-align: center;">
             <tr>
                 <td>
                     Yang di supervisi
@@ -205,97 +225,7 @@
         </table>
 
 
-
-
-
-
-        <?php
-
-        function getRomawi($int)
-        {
-
-            switch ($int) {
-
-                case 1:
-
-                    return "I";
-
-                    break;
-
-                case 2:
-
-                    return "II";
-
-                    break;
-
-                case 3:
-
-                    return "III";
-
-                    break;
-
-                case 4:
-
-                    return "IV";
-
-                    break;
-
-                case 5:
-
-                    return "V";
-
-                    break;
-
-                case 6:
-
-                    return "VI";
-
-                    break;
-
-                case 7:
-
-                    return "VII";
-
-                    break;
-
-                case 8:
-
-                    return "VIII";
-
-                    break;
-
-                case 9:
-
-                    return "IX";
-
-                    break;
-
-                case 10:
-
-                    return "X";
-
-                    break;
-
-                case 11:
-
-                    return "XI";
-
-                    break;
-
-                case 12:
-
-                    return "XII";
-
-                    break;
-            }
-        }
-
-        ?>
-
     </body>
-
 <?php } ?>
-
-
 
 </html>

@@ -47,7 +47,7 @@ class Grafik extends CI_Controller
         $bulan = $this->input->post('bulan');
         $ruangan = $this->input->post('ruangan');
 
-        $user_peruangan = $this->db->get_where('user', ['ruangan' => $ruangan])->result();
+        $user_peruangan = $this->db->get_where('user', ['ruangan' => $ruangan, 'jabatan' => '5'])->result();
 
         $grafik = [];
 
@@ -199,6 +199,8 @@ class Grafik extends CI_Controller
         $triwulan = $this->input->post('triwulan');
         $user = $this->input->post('user');
 
+        $pertahun = array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+
         $arrayBulanAngka = [];
         if ($triwulan == 'tw1') {
             $arrayBulanAngka = array('01', '02', '03');
@@ -211,6 +213,21 @@ class Grafik extends CI_Controller
         }
         $grafik = [];
         $arrayBulanNama = [];
+
+
+        $get_pertahun = $this->Grafik_model->get_rata2_skp_individu_pertahun($tahun, $user);
+        $cek_row_pertahun = $get_pertahun->num_rows();
+        $total = 0;
+
+        if ($cek_row_pertahun > 0) {
+            foreach ($get_pertahun->result() as $row) {
+                $total += $row->nilai;
+            }
+            $rata_pertahun = $total / $cek_row_pertahun;
+        } else {
+            $rata_pertahun = 0;
+        }
+
 
         foreach ($arrayBulanAngka as $bulan) {
             $namaBulan = date('F', mktime(0, 0, 0, $bulan, 1));
@@ -230,7 +247,8 @@ class Grafik extends CI_Controller
 
             $grafik[] = [
                 'rata2' => round($rata, 2),
-                'nama' => $namaBulan
+                'nama' => $namaBulan,
+                'rata_pertahun' => round($rata_pertahun, 2)
             ];
         }
         echo json_encode($grafik);

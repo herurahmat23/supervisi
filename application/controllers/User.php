@@ -34,7 +34,7 @@ class User extends CI_Controller
     public function save()
     {
         $this->load->library('upload');
-        $this->form_validation->set_rules('nik', 'NIK', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('nik', 'Username', 'trim|required|xss_clean');
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required|xss_clean');
         $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
         $this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|xss_clean');
@@ -107,7 +107,7 @@ class User extends CI_Controller
     public function update()
     {
         $this->load->library('upload');
-        $this->form_validation->set_rules('nik', 'NIK', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('nik', 'Username', 'trim|required|xss_clean');
         $this->form_validation->set_rules('nama', 'Nama', 'trim|required|xss_clean');
         $this->form_validation->set_rules('role', 'Role', 'trim|required|xss_clean');
         $this->form_validation->set_rules('jabatan', 'Jabatan', 'trim|required|xss_clean');

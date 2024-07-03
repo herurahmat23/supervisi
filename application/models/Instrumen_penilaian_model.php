@@ -239,6 +239,29 @@ class Instrumen_penilaian_model extends CI_Model
         return $data->result();
     }
 
+    function hasil_staff_web()
+    {
+        $data = $this->db->query("
+        SELECT
+            user.nama,
+            jadwal.jadwal_tanggal,
+            jadwal.jadwal_tanggal_selesai,
+            jadwal.jadwal_id,
+            user.id,
+            user.nik,
+            ruangan.ruangan 
+        FROM
+            jadwal
+            INNER JOIN user ON jadwal.jadwal_user_id = user.id
+            INNER JOIN ruangan ON user.ruangan = ruangan.id 
+        WHERE
+             user.jabatan = '5'
+        GROUP BY jadwal_id ORDER BY jadwal_id DESC
+            ");
+
+        return $data->result();
+    }
+
 
 
     function hasil_staff_cetak($kategori, $jadwal_id)
@@ -284,7 +307,30 @@ class Instrumen_penilaian_model extends CI_Model
 
 
 
-
+    function get_delete_hasil_staff($kategori, $jadwal_id)
+    {
+        $data = $this->db->query("
+            SELECT
+                jadwal.jadwal_id,
+                jadwal.jadwal_user_id,
+                jadwal.jadwal_tanggal,
+                instrumen_skp.instrumen,
+                kategori_instrumen_skp.kategori AS kategori_instrumen,
+                kategori_instrumen_skp.id AS kategori_id,
+                form_supervisi.sp_id
+            FROM
+                jadwal
+                JOIN form_supervisi ON jadwal.jadwal_id = form_supervisi.sp_jadwal_id
+                JOIN instrumen_skp ON form_supervisi.sp_instrumen_id = instrumen_skp.id
+                JOIN kategori_instrumen_skp ON instrumen_skp.kategori = kategori_instrumen_skp.id
+            WHERE
+                jadwal_id = '$jadwal_id' 
+                AND kategori_instrumen_skp.id = '$kategori' 
+            ORDER BY
+                instrumen_skp.NO ASC
+          ");
+        return $data;
+    }
 
 
 

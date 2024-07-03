@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th class="text-center" style="width: 30px;">No</th>
-            <th>NIK</th>
+            <th>Username</th>
             <th>Nama</th>
             <th>Role</th>
             <th class="text-center" style="width: 100px;"><i class="fas fa-sliders-h"></i></th>

@@ -604,10 +604,10 @@ class Instrumen_penilaian extends CI_Controller
     {
         $header['title'] = "Hasil Penilaian Perawat";
         $header['menu'] = "mn_instrumen";
-        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff();
+        $data['data'] = $this->Instrumen_penilaian_model->hasil_staff_web();
 
         $this->load->view('template/Header', $header);
-        $this->load->view('hasil_penilaian/view', $data);
+        $this->load->view('hasil_penilaian/view_hasil_pp', $data);
         $this->load->view('template/Footer');
     }
 
@@ -624,6 +624,20 @@ class Instrumen_penilaian extends CI_Controller
             $data['data'] = "";
         }
         $this->load->view('hasil_penilaian/cetak', $data);
+    }
+
+    function delete_hasil_staff()
+    {
+        $kategori_id = $this->input->post('kategori');
+        $jadwal_id = $this->input->post('jadwal');
+        $hasil = $this->Instrumen_penilaian_model->get_delete_hasil_staff($kategori_id, $jadwal_id)->result();
+        foreach ($hasil as $h) {
+            $this->db->where('sp_id', $h->sp_id);
+            $this->db->delete('form_supervisi');
+        }
+
+        $this->session->set_flashdata('message', 'Data berhasil dihapus');
+        redirect('Instrumen_penilaian/hasil_staff');
     }
 
 
