@@ -74,6 +74,21 @@
             </a>
         </div>
     </div>
+    <div class="col-lg-6 col-6">
+        <!-- small card -->
+        <div class="small-box bg-lightblue">
+            <div class="inner">
+                <h4>Grafik Rata rata SKP ruangan Pertahun</h4>
+                <br>
+            </div>
+            <div class="icon">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <a data-toggle="modal" data-target="#modal_grafik_6" class="small-box-footer">
+                Go <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div id="modal_grafik_1" class="modal fade" tabindex="-1" aria-hidden="true">
@@ -424,6 +439,62 @@
     </div>
 </div>
 
+<div id="modal_grafik_6" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Grafik Rata rata SKP ruangan Pertahun</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <form class="form-inline mb-2">
+
+                        <label class="mr-2" for="tahun">Tahun:</label>
+                        <select class="form-control mr-4" style="width: 100%;" id="tahun_5" name="tahun">
+                            <?php
+                            $tahun_sekarang = date("Y");
+                            for ($tahun = 2024; $tahun <= 2030; $tahun++) {
+                                echo "<option value='" . $tahun . "'>" . $tahun . "</option>";
+                            }
+                            ?>
+                        </select>
+
+                        <label class="mr-2" for="tahun">SKP:</label>
+                        <select class="form-control mr-4" style="width: 100%;" id="skp2" name="skp2">
+                            <option>PILIH SKP</option>
+                            <?php foreach ($skp as $r) : ?>
+                                <option value="<?= $r->id ?>"><?= $r->no ?> - <?= $r->kategori ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </form>
+                    <form class="form-inline">
+                        <button class="btn btn-primary" type="button" onclick="get_grafik_rata_ruanganperskp_pertahun()"><i class="fas fa-eye"></i> View Data</button>
+                    </form>
+                </div>
+
+                <hr>
+                <div class="card" style="padding: 0;" id="container_chart_rata_ruangan_per_skp_pertahun">
+                    <div class="card-header">
+                        <h5 class="card-title" id="judul_indikator">Grafik Rata rata SKP ruangan Pertahun</h5>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-primary" id="printChart_7"><i class="fas fa-print"></i> Print Chart</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="chart_rata_ruangan_per_skp_pertahun" style="height: 350px;"></canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" aria-hidden="true" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="<?= base_url('assets/') ?>plugins/jquery/jquery.min.js"></script>
 <!-- ChartJS -->
 <script src="<?= base_url('assets/') ?>plugins/chart.js/Chart.min.js"></script>
@@ -640,6 +711,38 @@
                 printWindow.close(); // Tutup jendela setelah mencetak
             };
         });
+
+        $('#printChart_7').click(function() {
+            let canvas = document.getElementById('chart_rata_ruangan_per_skp_pertahun');
+            let dataUrl = canvas.toDataURL(); // Konversi canvas ke data URL
+
+
+            let chartTitle = 'Grafik Rata rata SKP ruangan Pertahun';
+            let tahun = $('#tahun_5 option:selected').text()
+            let skp = $('#skp2 option:selected').text()
+
+            // Buat jendela baru untuk mencetak
+            let printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('body{font-family: Arial, sans-serif; text-align: center;}');
+            printWindow.document.write('h1{font-size: 24px; margin-bottom: 0;}');
+            printWindow.document.write('p{margin: 5px 0 20px;font-size: 16px; text-align: left; margin-left: 20px;}');
+            printWindow.document.write('img{max-width: 100%;}');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<h1>' + chartTitle + '</h1>'); // Tambahkan judul
+            printWindow.document.write('<p>Tahun: ' + tahun + '</p>');
+            printWindow.document.write('<p>SKP: ' + skp + '</p>');
+            printWindow.document.write('<img src="' + dataUrl + '"/>'); // Masukkan gambar ke dalam jendela
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.onload = function() {
+                printWindow.focus(); // Fokus pada jendela baru
+                printWindow.print(); // Jalankan perintah print
+                printWindow.close(); // Tutup jendela setelah mencetak
+            };
+        });
     });
 
     $('#printChart_6').click(function() {
@@ -697,6 +800,10 @@
 
     function get_grafik_individu_triwulan() {
         get_grafik_skp_individu_triwulan()
+    }
+
+    function get_grafik_rata_ruanganperskp_pertahun() {
+        get_grafik_rata_ruangan_per_skp_pertahun()
     }
 
     function get_grafik_rata_individu() {
@@ -1128,6 +1235,86 @@
                                     min: 0,
                                     // Tambahkan nilai maksimal sumbu Y di sini
                                     max: Math.max(...rata) + 10 // Maksimum adalah nilai tertinggi dari data + 10
+                                }
+                            }]
+                        },
+                        layout: {
+                            padding: 0
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    function get_grafik_rata_ruangan_per_skp_pertahun() {
+        let tahun = $('#tahun_5').val();
+        let skp = $('#skp2').val();
+
+        $.ajax({
+            url: '<?= site_url('Grafik/get_grafik_rata_ruangan_per_skp_pertahun') ?>',
+            type: 'post',
+            data: {
+                tahun: tahun,
+                skp: skp
+            },
+            dataType: 'JSON',
+            success: function(data) {
+                let rata = [];
+                let nama = [];
+
+                for (let i in data) {
+                    rata.push(data[i].rata2);
+                    nama.push(data[i].nama);
+                }
+
+                // Filter array rata untuk hanya mengambil nilai yang tidak nol
+                let nonZeroRata = rata.filter(value => value !== 0);
+
+                // Menghitung total dari nilai yang tidak nol
+                let total = nonZeroRata.reduce((sum, value) => sum + value, 0);
+
+                // Menghitung rata-rata dari total tersebut
+                let average = (total / nonZeroRata.length).toFixed(2);
+
+                // Membuat array rata-rata untuk setiap elemen di 'rata'
+                let averageArray = new Array(rata.length).fill(parseFloat(average));
+
+                $('#chart_rata_ruangan_per_skp_pertahun').remove();
+                $('#container_chart_rata_ruangan_per_skp_pertahun').append('<canvas id="chart_rata_ruangan_per_skp_pertahun" style="height: 350px;"></canvas>');
+
+                var ctx_imprs = document.getElementById('chart_rata_ruangan_per_skp_pertahun').getContext('2d');
+                var chart_rata_ruangan_per_skp = new Chart(ctx_imprs, {
+                    type: 'bar',
+                    data: {
+                        labels: nama,
+                        datasets: [{
+                            label: 'Rata rata',
+                            data: rata,
+                            backgroundColor: 'rgba(1, 19, 248, 0.8)',
+                            borderColor: 'rgba(1, 19, 248, 0.8)',
+                            pointRadius: 5,
+                            pointBackgroundColor: 'rgba(1, 19, 248, 0.8)',
+                            tension: 0,
+                            fill: false
+                        }, {
+                            label: 'Rata rata Rumah Sakit: ' + average,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        interaction: {
+                            intersect: false,
+                        },
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    max: Math.max(...rata) + 10
                                 }
                             }]
                         },

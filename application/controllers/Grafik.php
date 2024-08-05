@@ -253,4 +253,36 @@ class Grafik extends CI_Controller
         }
         echo json_encode($grafik);
     }
+
+    public function get_grafik_rata_ruangan_per_skp_pertahun()
+    {
+        $tahun = $this->input->post('tahun');
+        $skp = $this->input->post('skp');
+
+        $ruangan = $this->db->order_by('id', 'ASC')->where('ruangan NOT LIKE', '%MANAJEMEN%')->get('ruangan')->result();
+
+        $grafik = [];
+
+        foreach ($ruangan as $u) {
+            $get = $this->Grafik_model->get_rata2_skp_pertahun($tahun, $u->id, $skp);
+            $cek_row = $get->num_rows();
+            $total = 0;
+
+            if ($cek_row > 0) {
+                foreach ($get->result() as $row) {
+                    $total += $row->nilai;
+                }
+                $rata = $total / $cek_row;
+            } else {
+                $rata = 0;
+            }
+
+            $grafik[] = [
+                'rata2' => round($rata, 2),
+                'nama' => $u->ruangan
+            ];
+        }
+
+        echo json_encode($grafik);
+    }
 }
